@@ -1,0 +1,101 @@
+---
+slug: archiving-git-branches
+title: Tidy up a Git repo by archiving branches
+description: Reduce the amount of branches without necessarily deleting them.
+authors: [alex]
+tags: [git, branch, archive]
+---
+
+![Tree branches](branches.jpg)
+
+Reduce the amount of branches without necessarily deleting them
+
+<!--truncate-->
+
+:::note
+This article contains ideas and suggestions for an more advanced use of Git; it’s intended for people who already know its basic usage.
+:::
+
+---
+
+When working on a code base, alone or with a team, we can end up with a lot of branches that are inactive. They are experiments that have never been completed, for instance.
+
+The presence of these forgotten branches can be bothering:
+
+- when using the CLI, auto-completion for `git checkout` will be cluttered;
+- when using an interface such as GitHub, to select a branch in order to create a pull request or run an action, the list will be long;
+- generally, you may find that having loads of branches in your repo is like having loads _TODOs-that-will-never-be-done_ on your TODO list. Or loads of _"in progress"_ tickets on a Kanban board.
+
+However, deleting these branches might not be possible. Some could be useful in the future. Some people in your team might want to delete them while others want to keep them.
+
+A solution is to “archive” these branches by storing them separately from the normal git branches. The archived branches won’t show up in `git branch` anymore, but they will stay available if someone wants to resume work on them.
+
+## Git refs
+
+Git stores local branches in `refs/heads`. For instance, a branch called branch will be in `refs/heads/branch`.
+
+Remote branches are in `refs/remote/<remote-name>`. For instance, `refs/remote/origin/branch`. There are also `refs/tags`, `refs/stash`, `refs/notes`.
+
+To archive a branch, we can place them in a newly created ref, for instance: `refs/experiments`.
+
+If we are in a team we can add a sub-level with the name of the developers: `refs/experiments/<developer-name>`.
+
+The following sections explains the commands allowing us to achieve this.
+
+## Archive a branch
+
+- Save the branch in the `experiments` ref:
+
+  `git update-ref refs/experiments/alice/branch branch`
+
+- Push the experiment to the remote:
+
+  `git push origin refs/experiments/alice/branch`
+
+- Delete the original branch, locally and on the remote:
+
+  `git branch -d branch`
+
+  `git push -d origin branch`
+
+## Restore a branch
+
+- Create a branch that points to the same commit than the experiment:
+
+  `git checkout -b branch refs/experiments/alice/branch`
+
+- Optional, delete the experiment, locally and on the remote:
+
+  `git update-ref -d refs/experiments/alice/branch`
+
+  `git push -d origin refs/experiments/alice/branch`
+
+## Other useful commands
+
+- View all experiments:
+
+  `git for-each-ref | grep refs/experiments`
+
+- Push all experiments to the remote:
+
+  `git push origin "refs/experiments/*"`
+
+- Fetch all experiments present on the remote:
+
+  `git fetch origin "refs/experiments/*:refs/experiments/*"`
+
+  (or:
+
+  `git fetch origin "+refs/experiments/\*:refs/experiments/\*"`
+
+  but careful: **this will erase all experiments present locally**)
+
+- See everything that’s in refs on a remote repository:
+
+  `git clone --mirror <repo>`
+
+  `cd <repo>`
+
+  `git for-each-ref`
+
+  Doing this on a GitHub repository which has had pull requests, you will notice that GitHub creates refs/pull and stores all pull requests in it.

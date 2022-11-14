@@ -1,0 +1,42 @@
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+name: Deploy to GitHub Pages
+
+jobs:
+  deploy-to-github-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: master
+
+      - run: echo "nvmrc=$(cat .nvmrc)" >> $GITHUB_ENV
+        id: nvmrc
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "${{ env.nvmrc }}"
+          cache: yarn
+
+      - run: |
+          yarn install --frozen-lockfile
+          yarn build
+          git fetch
+          git switch --orphan github-pages
+          mv build docs
+          git add docs
+          git config user.name "Zwyx - GitHub Actions"
+          git config user.email "29386932+Zwyx@users.noreply.github.com>"
+          git commit -m "Push websive on GitHub Pages"
+          git push --set-upstream origin --force github-pages
+      #
+      # - name: Setup tmate session
+      #   if: ${{ always() }}
+      #   timeout-minutes: 30 # Run `sudo shutdown -h now` to terminate the session
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   uses: mxschmitt/action-tmate@v3
