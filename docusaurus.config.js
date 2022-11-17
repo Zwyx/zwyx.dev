@@ -32,6 +32,10 @@ const config = {
 			({
 				docs: false,
 				blog: {
+					// Note: at	the moment, the website is a blog only, but I didn't want to configure Docusaurus to be
+					// in blog-only mode, as this would have made all post links to be `<domain>/<post-slug>`;
+					// I wanted to keep the format `<domain>/blog/<post-slug>` in case the website becomes used for more
+					// in the future, so I set up a redirection from `/` to `/blog`, see below
 					blogSidebarTitle: "Latest posts",
 					showReadingTime: true,
 					editUrl: "https://github.com/zwyx/zwyx.github.io/tree/master/",
@@ -51,6 +55,7 @@ const config = {
 				logo: {
 					alt: "Zwyx logo",
 					src: "img/logo.png",
+					href: "/blog",
 				},
 				items: [
 					// {
@@ -74,6 +79,20 @@ const config = {
 				darkTheme: darkCodeTheme,
 			},
 		}),
+
+	plugins: [
+		[
+			"@docusaurus/plugin-client-redirects",
+			{
+				redirects: [
+					{
+						from: "/",
+						to: "/blog",
+					},
+				],
+			},
+		],
+	],
 };
 
 module.exports = config;

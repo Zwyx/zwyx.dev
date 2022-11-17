@@ -31,7 +31,7 @@ jobs:
           git add docs
           git config user.name "Zwyx - GitHub Actions"
           git config user.email "29386932+Zwyx@users.noreply.github.com>"
-          git commit -m "Push websive on GitHub Pages"
+          git commit -m "Push website on GitHub Pages"
           git push --set-upstream origin --force github-pages
       #
       # - name: Setup tmate session
