@@ -36,6 +36,8 @@ const config = {
 					// in blog-only mode, as this would have made all post links to be `<domain>/<post-slug>`;
 					// I wanted to keep the format `<domain>/blog/<post-slug>` in case the website becomes used for more
 					// in the future, so I set up a redirection from `/` to `/blog`, see below
+					blogTitle: "Zwyx's blog",
+					blogDescription: "Web dev and stuff",
 					blogSidebarTitle: "Latest posts",
 					showReadingTime: true,
 					editUrl: "https://github.com/zwyx/zwyx.github.io/tree/master/",
@@ -50,6 +52,7 @@ const config = {
 	themeConfig:
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 		({
+			image: "img/logo.png",
 			navbar: {
 				// title: "Zwyx",
 				logo: {
