@@ -41,6 +41,12 @@ const config = {
 					blogSidebarTitle: "Latest posts",
 					showReadingTime: true,
 					editUrl: "https://github.com/zwyx/zwyx.github.io/tree/master/",
+					feedOptions: {
+						type: "all",
+						title: "Zwyx's blog",
+						description: "Web dev and stuff",
+						copyright: `Copyright © ${new Date().getFullYear()} Zwyx.`,
+					},
 				},
 				theme: {
 					customCss: require.resolve("./src/css/custom.css"),
