@@ -12,7 +12,7 @@ const config = {
 	baseUrl: "/",
 	onBrokenLinks: "throw",
 	onBrokenMarkdownLinks: "warn",
-	favicon: "img/favicon.ico",
+	favicon: "img/Zwyx-220x220-rounded-favicon.ico",
 
 	// https://docusaurus.io/docs/deployment#docusaurusconfigjs-settings
 	trailingSlash: false,
@@ -52,12 +52,12 @@ const config = {
 	themeConfig:
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 		({
-			image: "img/logo.png",
+			image: "img/Zwyx-236x236-android-chrome-192x192.png",
 			navbar: {
 				// title: "Zwyx",
 				logo: {
 					alt: "Zwyx logo",
-					src: "img/logo.png",
+					src: "img/Zwyx-236x236-android-chrome-192x192.png",
 					href: "/blog",
 				},
 				items: [
