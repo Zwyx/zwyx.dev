@@ -14,7 +14,7 @@ import reactNfc from "./react-nfc.png";
 	style={{
 		display: "block",
 		margin: "0 auto 32px auto",
-		// width: "500px",
+		borderRadius: "3px",
 	}}
 />
 
@@ -62,7 +62,7 @@ The PhoneGap NFC stuff will be accessible globally, so we don't need any imports
 
 Now we open `src/App.tsx` and we replace its content by the following code, which is going to initialise NFC, invite the user to open the phone settings if NFC is not enabled, and read the content of an NFC tag (PhoneGap NFC offers plenty of other features documented [here](https://github.com/chariotsolutions/phonegap-nfc)):
 
-```tsx
+```tsx title="src/App.tsx"
 import React from "react";
 import "./App.css";
 
@@ -179,7 +179,7 @@ export default App;
 
 We add some styling in `App.css`:
 
-```css
+```css title="App.css"
 .nfc {
 	height: 100vh;
 	width: 100vw;
@@ -242,7 +242,17 @@ If an error occurs, see the first point in the **Notes** <!-- [Notes](#notes) --
 
 We can now start Android Studio, open the newly created `android` folder as a project, wait for the scripts execution to finish, then click **Run** → **Run 'app'** to execute our app on our device.
 
-![NFC unavailable](nfc-unavailable.png)
+import nfcUnavailable from "./nfc-unavailable.png";
+
+<img
+	src={nfcUnavailable}
+	alt="NFC unavailable"
+	style={{
+		display: "block",
+		margin: "0 auto 32px auto",
+		borderRadius: "3px",
+	}}
+/>
 
 import { ImageLegend } from "@site/src/components/ImageLegend";
 
