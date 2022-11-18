@@ -39,6 +39,7 @@ const config = {
 					blogTitle: "Zwyx's blog",
 					blogDescription: "Web dev and stuff",
 					blogSidebarTitle: "Latest posts",
+					blogSidebarCount: "ALL",
 					showReadingTime: true,
 					editUrl: "https://github.com/zwyx/zwyx.github.io/tree/master/",
 					feedOptions: {
