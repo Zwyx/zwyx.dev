@@ -1,8 +1,35 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
+require("dotenv").config();
+
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+
+const giscusRepo = process.env.GISCUS_REPO;
+const giscusRepoId = process.env.GISCUS_REPO_ID;
+const giscusCategory = process.env.GISCUS_CATEGORY;
+const giscusCategoryId = process.env.GISCUS_CATEGORY_ID;
+
+if (!giscusRepo) {
+	console.error("Missing environment variable 'GISCUS_REPO'");
+	process.exit(1);
+}
+
+if (!giscusRepoId) {
+	console.error("Missing environment variable 'GISCUS_REPO_ID'");
+	process.exit(1);
+}
+
+if (!giscusCategory) {
+	console.error("Missing environment variable 'GISCUS_CATEGORY'");
+	process.exit(1);
+}
+
+if (!giscusCategoryId) {
+	console.error("Missing environment variable 'GISCUS_CATEGORY_ID'");
+	process.exit(1);
+}
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -40,6 +67,7 @@ const config = {
 					blogDescription: "Web dev and stuff",
 					blogSidebarTitle: "Latest posts",
 					blogSidebarCount: "ALL",
+					postsPerPage: "ALL",
 					showReadingTime: true,
 					editUrl: "https://github.com/zwyx/zwyx.github.io/tree/master/",
 					feedOptions: {
@@ -103,6 +131,13 @@ const config = {
 			},
 		],
 	],
+
+	customFields: {
+		giscusRepo,
+		giscusRepoId,
+		giscusCategory,
+		giscusCategoryId,
+	},
 };
 
 module.exports = config;

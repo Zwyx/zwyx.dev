@@ -22,9 +22,16 @@ jobs:
           node-version: "${{ env.nvmrc }}"
           cache: yarn
 
+      - run: yarn install --frozen-lockfile
+
+      - env:
+          GISCUS_REPO: ${{ secrets.GISCUS_REPO }}
+          GISCUS_REPO_ID: ${{ secrets.GISCUS_REPO_ID }}
+          GISCUS_CATEGORY: ${{ secrets.GISCUS_CATEGORY }}
+          GISCUS_CATEGORY_ID: ${{ secrets.GISCUS_CATEGORY_ID }}
+        run: yarn build
+
       - run: |
-          yarn install --frozen-lockfile
-          yarn build
           git fetch
           git switch --orphan github-pages
           mv build docs
