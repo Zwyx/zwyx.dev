@@ -6,30 +6,25 @@ require("dotenv").config();
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
-const giscusRepo = process.env.GISCUS_REPO;
-const giscusRepoId = process.env.GISCUS_REPO_ID;
-const giscusCategory = process.env.GISCUS_CATEGORY;
-const giscusCategoryId = process.env.GISCUS_CATEGORY_ID;
+const envVariablesForCustomFields = [
+	["GISCUS_REPO", "giscusRepo"],
+	["GISCUS_REPO_ID", "giscusRepoId"],
+	["GISCUS_CATEGORY", "giscusCategory"],
+	["GISCUS_CATEGORY_ID", "giscusCategoryId"],
+];
 
-if (!giscusRepo) {
-	console.error("Missing environment variable 'GISCUS_REPO'");
-	process.exit(1);
-}
+const customFields = Object.fromEntries(
+	envVariablesForCustomFields.map(([variableName, customFieldName]) => {
+		const value = process.env[variableName];
 
-if (!giscusRepoId) {
-	console.error("Missing environment variable 'GISCUS_REPO_ID'");
-	process.exit(1);
-}
+		if (!value) {
+			console.error(`Missing value for environment variable '${variableName}'`);
+			process.exit(1);
+		}
 
-if (!giscusCategory) {
-	console.error("Missing environment variable 'GISCUS_CATEGORY'");
-	process.exit(1);
-}
-
-if (!giscusCategoryId) {
-	console.error("Missing environment variable 'GISCUS_CATEGORY_ID'");
-	process.exit(1);
-}
+		return [customFieldName, value];
+	}),
+);
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -87,6 +82,10 @@ const config = {
 	themeConfig:
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 		({
+			metadata: [{ name: "keywords", content: "web, development, blog" }],
+			colorMode: {
+				respectPrefersColorScheme: true,
+			},
 			image: "img/Zwyx-236x236-android-chrome-192x192.png",
 			navbar: {
 				// title: "Zwyx",
@@ -121,23 +120,19 @@ const config = {
 	plugins: [
 		[
 			"@docusaurus/plugin-client-redirects",
-			{
+			/** @type {import('@docusaurus/plugin-client-redirects').Options} */
+			({
 				redirects: [
 					{
 						from: "/",
 						to: "/blog",
 					},
 				],
-			},
+			}),
 		],
 	],
 
-	customFields: {
-		giscusRepo,
-		giscusRepoId,
-		giscusCategory,
-		giscusCategoryId,
-	},
+	customFields,
 };
 
 module.exports = config;
