@@ -1,0 +1,22 @@
+.imageWrapper {
+	margin-bottom: 32px;
+}
+
+.imageWrapper.withLegend {
+	margin-bottom: 24px;
+}
+
+.frame {
+	margin: 0 auto;
+	border-radius: 3px;
+	line-height: 0; /* Prevents a larger padding at the bottom */
+}
+
+.frame.visible {
+	box-shadow: 0 0 1px 1px var(--ifm-color-emphasis-500);
+	padding: 4px;
+}
+
+.image {
+	border-radius: 3px;
+}

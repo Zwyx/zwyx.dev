@@ -6,21 +6,14 @@ authors: [alex]
 tags: [git, commit, hash]
 ---
 
+import { Image } from "@site/src/components/Image";
 import gitHashMiner from "./git-hash-miner.png";
 
-<img
+<Image
 	src={gitHashMiner}
 	alt="Git Hash Miner"
-	style={{
-		display: "block",
-		margin: "0 auto 32px auto",
-		borderRadius: "3px",
-	}}
+	legend="Git hashes mined with Git Hash Miner"
 />
-
-import { ImageLegend } from "@site/src/components/ImageLegend";
-
-<ImageLegend>Git hashes mined with Git Hash Miner</ImageLegend>
 
 Following the same principle that Bitcoin uses for its proof of work, we can "mine" our Git commit hashes too!
 
@@ -34,7 +27,7 @@ To be accepted in the Bitcoin blockchain, the numerical value of a block's hash 
 
 We can do the same with Git commit hashes: mine them to make them start with a particular prefix. Or end with a particular suffix, or any other rule we'd like.
 
-# How are Git commit hashes generated
+## How are Git commit hashes generated
 
 Roughly, when a commit is created, Git take these details:
 
@@ -69,7 +62,7 @@ And even when it's shown, by Sublime Merge for instance, I believe it's not a bi
 
 <ImageLegend>Hexadecimal number appended to the committer name</ImageLegend>
 
-# Mine your commit hashes!
+## Mine your commit hashes!
 
 - Install `git-hash-miner`:
 

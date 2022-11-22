@@ -6,17 +6,10 @@ authors: [alex]
 tags: [nfc, typescript, react, capacitor, cordova]
 ---
 
+import { Image } from "@site/src/components/Image";
 import reactNfc from "./react-nfc.png";
 
-<img
-	src={reactNfc}
-	alt="React NFC"
-	style={{
-		display: "block",
-		margin: "0 auto 32px auto",
-		borderRadius: "3px",
-	}}
-/>
+<Image src={reactNfc} alt="React NFC" />
 
 [Ionic Capacitor](https://capacitor.ionicframework.com/) and [Apache Cordova](https://cordova.apache.org/) are two common wrappers to create a hybrid mobile application from a web application. The main advantage over a native mobile app is the re-usability of the code — and the development languages being HTML, CSS, and JavaScript, if we like them.
 
@@ -237,26 +230,19 @@ npx cap add android
 ```
 
 :::info
-If an error occurs, see the first point in the **Notes** <!-- [Notes](#notes) --> section below.
+If an error occurs, see the first point in the [**Notes**](#notes) section below.
 :::
 
 We can now start Android Studio, open the newly created `android` folder as a project, wait for the scripts execution to finish, then click **Run** → **Run 'app'** to execute our app on our device.
 
 import nfcUnavailable from "./nfc-unavailable.png";
 
-<img
+<Image
 	src={nfcUnavailable}
 	alt="NFC unavailable"
-	style={{
-		display: "block",
-		margin: "0 auto 32px auto",
-		borderRadius: "3px",
-	}}
+	width="80%"
+	legend="Our web app on an Android device with NFC not enabled"
 />
-
-import { ImageLegend } from "@site/src/components/ImageLegend";
-
-<ImageLegend>Our web app on an Android device with NFC not enabled</ImageLegend>
 
 From now on, if we make changes to our web app, we just need to run the following two commands to rebuild the app and update the Capacitor project:
 
@@ -331,7 +317,7 @@ npx cordova platform add android
 ```
 
 :::info
-If an error occurs, see the second point in the **Notes** <!-- [Notes](#notes) --> section below.
+If an error occurs, see the second point in the [**Notes**](#notes) section below.
 :::
 
 We place our web app in the Cordova project by copying the content of the `build` folder in the `Cordova/www` folder (after having deleted everything in `Cordova/www`). We also need to add the following line in `index.html`:
