@@ -1,0 +1,262 @@
+---
+slug: hello-docusaurus
+title: Hello Docusaurus!
+description: A few tips on how I built this site with the great static site generator Docusaurus
+authors: [alex]
+tags: [docusaurus, static site generator, blog]
+---
+
+<div style={{textAlign: 'center'}}>
+
+![Docusaurus](docusaurus.svg)
+
+</div>
+
+I've investigated different static site generators — SSGs — in order to set up a proper blog for this website. I've read about a lot of them, tried a few. My favourite by far is [Docusaurus](https://docusaurus.io), the one this site is now built with.
+
+<!-- truncate -->
+
+## Quick comparaison
+
+As I'm working on complex web apps during the day, SSGs make evening projects feel like holiday.
+
+Still, I found that many of them require quite some tinkering before achieving desired results. In theroy, to have a quick website set up, we can start from a template. But unfortunately this is where most of the pain come from. Many templates I looked at where incomplete, old, unmaintained, or simply ugly.
+
+Docusaurus is the one which has the best of both:
+
+- A great template to start with.
+
+There is [only one](https://docusaurus.io/docs/api/themes) at the moment. It has basically everything I wanted and it's very nice. So it's much better than a choice of 100 useless templates. It might be a bit of a problem for someone really not liking it... but still, wait for the next point.
+
+- A great way to tinker and customise it.
+
+Docusaurus provides multiple ways to customise the [styling and layout](https://docusaurus.io/docs/styling-layout), depending on what we want to change, and how deep we want to change it. From creating React components and use them in [MDX](https://mdxjs.com/), to the brilliant [swizzling](https://docusaurus.io/docs/swizzling) method allowing to easily cherry pick a component to wrap it or replace it (there is an example in the [Add comment system](#add-comment-system) section below).
+
+## Setup
+
+:::note
+I will write about the choices I've made during the building of this blog. I won't detail every steps — official docs are better sources and will stay up to date.
+:::
+
+### Create a new Docusaurus project
+
+```bash
+npx create-docusaurus@latest your-project-name classic --typescript
+```
+
+This is all what's needed to have a complete website with dummy pages ready to be filled with content.
+
+:::tip
+If you're sick of having a new browser tab being opened everytime you run the `start` command, append `--no-open`.
+:::
+
+### Setup Prettier
+
+[Prettier](https://prettier.io/) formats Markdown well, it will be appreciated while writing blog posts.
+
+### Set up redirect to `/blog`
+
+I wanted the blog to be the only content of the site for the moment. But I didn't want to [make the blog base URL simply `/`](https://docusaurus.io/docs/blog#blog-only-mode), as all the post links would be in the format `<domain>/<post>`, which could potentially become annoying if I wanted to add other types of content to the site in the future.
+
+So I kept the blog base URL `/blog` (post links are `<domain>/blog/<post>`), and I created a redirect from `/` to `/blog`.
+
+:::info
+Server-side redirects are best, but as I'm hosting the site on GitHub Pages, this isn't an option.
+:::
+
+Docusaurus provides a [plugin for client-side redirects](https://docusaurus.io/docs/next/api/plugins/@docusaurus/plugin-client-redirects):
+
+```bash
+yarn add @docusaurus/plugin-client-redirects
+```
+
+```js title="Extract from 'docusaurus.config.js'"
+plugins: [
+	[
+		"@docusaurus/plugin-client-redirects",
+		/** @type {import('@docusaurus/plugin-client-redirects').Options} */
+		({
+			redirects: [
+				{
+					from: "/",
+					to: "/blog",
+				},
+			],
+		}),
+	],
+],
+```
+
+### Deactivate `docs`
+
+```js title="Extract from 'docusaurus.config.js'"
+presets: [
+	[
+		"classic",
+		...
+			docs: false,
+```
+
+### Add metadata
+
+Adding the following makes links to the blog look pretty when shared.
+
+```js title="Extract from 'docusaurus.config.js'"
+presets: [
+	[
+		"classic",
+		...
+			blog: {
+				blogTitle: "<Blog title>",
+				blogDescription: "<Blog description>",
+```
+
+```js title="Extract from 'docusaurus.config.js'"
+themeConfig:
+	...
+		image: "<Image path>",
+```
+
+### Activate all feed types
+
+Just because I want all the shiny new stuff, I activated all the [types of feeds](https://docusaurus.io/docs/next/blog#feed).
+
+```js title="Extract from 'docusaurus.config.js'"
+presets: [
+	[
+		"classic",
+		...
+			blog: {
+				feedOptions: {
+					type: "all",
+					title: "<Blog title>", // By default, it's in the format `<Site name> Blog`
+					description: "<Blog description>", // Same here
+				},
+```
+
+### Add comment system
+
+[Giscus](https://giscus.app/) is a great comment system powered by GitHub Discussions.
+
+Install its React component:
+
+```bash
+yarn add @giscus/react
+```
+
+Use [giscus.app](https://giscus.app) to set up and retrieve your configuration for Giscus, then create the file `src/components/GiscusComments.tsx`:
+
+```tsx title="src/components/GiscusComments.tsx"
+import { useColorMode } from "@docusaurus/theme-common";
+import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import Giscus from "@giscus/react";
+import React from "react";
+
+export default function GiscusComments() {
+	const {
+		siteConfig: {
+			customFields: {
+				giscusRepo,
+				giscusRepoId,
+				giscusCategory,
+				giscusCategoryId,
+			},
+		},
+	} = useDocusaurusContext();
+
+	const { colorMode } = useColorMode();
+
+	if (
+		typeof giscusRepo !== "string" ||
+		typeof giscusRepoId !== "string" ||
+		typeof giscusCategory !== "string" ||
+		typeof giscusCategoryId !== "string"
+	) {
+		return null;
+	}
+
+	return (
+		<Giscus
+			repo={giscusRepo as `${string}/${string}`}
+			repoId={giscusRepoId}
+			category={giscusCategory}
+			categoryId={giscusCategoryId}
+			mapping="pathname"
+			strict="0"
+			reactionsEnabled="1"
+			emitMetadata="0"
+			inputPosition="bottom"
+			theme={colorMode}
+			lang="en"
+		/>
+	);
+}
+```
+
+:::tip
+I used Docusaurus' [custom fields](https://docusaurus.io/docs/next/api/docusaurus-config#customfields) to retrieve Giscus configuration from Docusaurus' config (itself retrieving these values using [`dotenv`](https://www.npmjs.com/package/dotenv))
+:::
+
+In order to add the Giscus component to our blog posts, we are going to use Docusaurus' swizzle method to wrap one component of the template (read about swizzling [here](https://docusaurus.io/docs/next/swizzling)):
+
+```bash
+yarn run swizzle @docusaurus/theme-classic BlogPostPaginator --wrap
+```
+
+`BlogPostPaginator` is the component showing "Newer Post" and "Older Post" links at the bottom of a blog post page.
+
+The previous command created a new file:
+
+```
+src/theme/BlogPostPaginator/index.js
+```
+
+which we can directly rename to `.tsx`:
+
+```
+src/theme/BlogPostPaginator/index.tsx
+```
+
+:::info
+Now we need to restart Docusaurus' dev server, in order for it to take the new custom component into account.
+:::
+
+This file is a wrapper for the `BlogPostPaginator` component. We can very easily add our new `GiscusComments` component just above it:
+
+```tsx title="src/theme/BlogPostPaginator/index.tsx"
+import GiscusComments from "@site/src/components/GiscusComments";
+import BlogPostPaginator from "@theme-original/BlogPostPaginator";
+import React from "react";
+
+export default function BlogPostPaginatorWrapper(props) {
+	return (
+		<>
+			<div style={{ marginTop: "32px" }} />
+
+			<GiscusComments />
+
+			<div style={{ marginTop: "-24px" }} />
+
+			<BlogPostPaginator {...props} />
+		</>
+	);
+}
+```
+
+:::tip
+I didn't use the `BlogPostItem` component, because it is displayed for every blog posts on the main blog listing page. It would be possible to display the Giscus component conditionnally though (as see [here](https://dev.to/m19v/how-to-add-giscus-comments-to-docusaurus-439h)).
+:::
+
+Last thing, to be done once your local testing is finish, is to add a file `giscus.json` at the root of the repository to [prevent other websites from showing your discussions](https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md#giscusjson):
+
+```json title="giscus.json"
+{
+	"origins": ["https://<your-domain>"]
+}
+```
+
+Giscus will stop showing on your `localhost:3000` after this file is committed.
+
+### Automatically deploy to GitHub Pages
+
+The site is deployed on very push to the `master` branch. The [code](https://github.com/Zwyx/zwyx.github.io/blob/master/.github/workflows/deploy-to-github-pages.yml) should be self-explanatory with enough knowledge on [GitHub Actions](https://docs.github.com/en/actions) and [GitHub Pages](https://docs.github.com/en/pages).
