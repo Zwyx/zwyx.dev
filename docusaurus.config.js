@@ -30,7 +30,7 @@ const customFields = Object.fromEntries(
 const config = {
 	title: "Zwyx",
 	tagline: "Web dev",
-	url: "https://zwyx.github.io",
+	url: "https://zwyx.dev",
 	baseUrl: "/",
 	onBrokenLinks: "throw",
 	onBrokenMarkdownLinks: "warn",
@@ -70,6 +70,9 @@ const config = {
 				},
 				theme: {
 					customCss: require.resolve("./src/css/custom.css"),
+				},
+				gtag: {
+					trackingID: process.env.GOOGLE_ANALYTICS_TRACKING_ID,
 				},
 			}),
 		],

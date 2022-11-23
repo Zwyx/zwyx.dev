@@ -25,6 +25,7 @@ jobs:
       - run: yarn install --frozen-lockfile
 
       - env:
+          GOOGLE_ANALYTICS_TRACKING_ID: ${{ secrets.GOOGLE_ANALYTICS_TRACKING_ID }}
           GISCUS_REPO: ${{ secrets.GISCUS_REPO }}
           GISCUS_REPO_ID: ${{ secrets.GISCUS_REPO_ID }}
           GISCUS_CATEGORY: ${{ secrets.GISCUS_CATEGORY }}
