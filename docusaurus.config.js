@@ -59,7 +59,6 @@ const config = {
 					blogSidebarTitle: "Latest posts",
 					blogSidebarCount: "ALL",
 					postsPerPage: "ALL",
-					showReadingTime: true,
 					editUrl: "https://github.com/zwyx/zwyx.github.io/tree/master/",
 					feedOptions: {
 						type: "all",
@@ -141,11 +140,11 @@ const config = {
 				routeBasePath: "til",
 				path: "til",
 				blogTitle: "Zwyx's Today I Learnt",
-				blogDescription: "Today I Learnt about dev stuff",
+				blogDescription: "Today I Learnt, about web and dev",
 				blogSidebarTitle: "Latest TILs",
 				blogSidebarCount: "ALL",
 				postsPerPage: "ALL",
-				showReadingTime: true,
+				showReadingTime: false,
 				editUrl: "https://github.com/zwyx/zwyx.github.io/tree/master/",
 				feedOptions: {
 					type: "all",

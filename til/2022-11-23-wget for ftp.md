@@ -1,3 +1,7 @@
+---
+tags: [wget, ftp, cli, command]
+---
+
 Download the content of an FTP folder with `wget`:
 
 ```bash
