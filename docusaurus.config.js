@@ -54,10 +54,6 @@ const config = {
 			({
 				docs: false,
 				blog: {
-					// Note: at	the moment, the website is a blog only, but I didn't want to configure Docusaurus to be
-					// in blog-only mode, as this would have made all post links to be `<domain>/<post-slug>`;
-					// I wanted to keep the format `<domain>/blog/<post-slug>` in case the website becomes used for more
-					// in the future, so I set up a redirection from `/` to `/blog`, see below
 					blogTitle: "Zwyx's blog",
 					blogDescription: "Web dev and stuff",
 					blogSidebarTitle: "Latest posts",
@@ -95,10 +91,14 @@ const config = {
 					href: "/blog",
 				},
 				items: [
-					// {
-					// 	to: "/",
-					// 	label: "Blog",
-					// },
+					{
+						to: "blog",
+						label: "Blog",
+					},
+					{
+						to: "til",
+						label: "Today I Learnt",
+					},
 					{
 						href: "https://github.com/Zwyx",
 						className: "header-github-link",
@@ -129,6 +129,28 @@ const config = {
 					},
 				],
 			}),
+		],
+
+		[
+			"@docusaurus/plugin-content-blog",
+			{
+				id: "til",
+				routeBasePath: "til",
+				path: "til",
+				blogTitle: "Zwyx's Today I Learnt",
+				blogDescription: "Today I Learnt about dev stuff",
+				blogSidebarTitle: "Latest TILs",
+				blogSidebarCount: "ALL",
+				postsPerPage: "ALL",
+				showReadingTime: true,
+				editUrl: "https://github.com/zwyx/zwyx.github.io/tree/master/",
+				feedOptions: {
+					type: "all",
+					title: "Zwyx's TILs",
+					description: "Today I Learnt about dev stuff",
+					copyright: `Copyright © ${new Date().getFullYear()} Zwyx.`,
+				},
+			},
 		],
 	],
 
