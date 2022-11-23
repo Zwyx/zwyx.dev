@@ -198,54 +198,64 @@ export default function GiscusComments() {
 I used Docusaurus' [custom fields](https://docusaurus.io/docs/next/api/docusaurus-config#customfields) to retrieve Giscus configuration from Docusaurus' config (itself retrieving these values using [`dotenv`](https://www.npmjs.com/package/dotenv))
 :::
 
-In order to add the Giscus component to our blog posts, we are going to use Docusaurus' swizzle method to wrap one component of the template (read about swizzling [here](https://docusaurus.io/docs/next/swizzling)):
+In order to add the Giscus component to our blog posts, we are going to use Docusaurus' swizzling method to wrap one component of the template (read about swizzling [here](https://docusaurus.io/docs/next/swizzling)):
 
 ```bash
-yarn run swizzle @docusaurus/theme-classic BlogPostPaginator --wrap
+yarn run swizzle @docusaurus/theme-classic BlogPostItem --wrap
 ```
 
-`BlogPostPaginator` is the component showing "Newer Post" and "Older Post" links at the bottom of a blog post page.
-
-The previous command created a new file:
+This command creates a new file:
 
 ```
-src/theme/BlogPostPaginator/index.js
+src/theme/BlogPostItem/index.js
 ```
 
 which we can directly rename to `.tsx`:
 
 ```
-src/theme/BlogPostPaginator/index.tsx
+src/theme/BlogPostItem/index.tsx
 ```
 
 :::info
 Now we need to restart Docusaurus' dev server, in order for it to take the new custom component into account.
 :::
 
-This file is a wrapper for the `BlogPostPaginator` component. We can very easily add our new `GiscusComments` component just above it:
+This file is a wrapper for the `BlogPostItem` component. We can very easily add our new `GiscusComments` component just below it:
 
-```tsx title="src/theme/BlogPostPaginator/index.tsx"
+```tsx title="src/theme/BlogPostItem/index.tsx"
+import useIsBrowser from "@docusaurus/useIsBrowser";
 import GiscusComments from "@site/src/components/GiscusComments";
-import BlogPostPaginator from "@theme-original/BlogPostPaginator";
+import BlogPostItem from "@theme-original/BlogPostItem";
 import React from "react";
 
-export default function BlogPostPaginatorWrapper(props) {
+const POST_REGEX = /^\/blog\/.+$/;
+
+export default function BlogPostItemWrapper(props) {
+	const isBrowser = useIsBrowser();
+
 	return (
 		<>
-			<div style={{ marginTop: "32px" }} />
+			<BlogPostItem {...props} />
 
-			<GiscusComments />
+			{isBrowser && window.location.pathname.match(POST_REGEX) && (
+				<>
+					<div style={{ marginTop: "32px" }} />
 
-			<div style={{ marginTop: "-24px" }} />
+					<GiscusComments />
 
-			<BlogPostPaginator {...props} />
+					<div style={{ marginTop: "-24px" }} />
+				</>
+			)}
 		</>
 	);
 }
 ```
 
-:::tip
-I didn't use the `BlogPostItem` component, because it is displayed for every blog posts on the main blog listing page. It would be possible to display the Giscus component conditionnally though (as see [here](https://dev.to/m19v/how-to-add-giscus-comments-to-docusaurus-439h)).
+:::tip Details
+
+- We check that the `pathname` matches `/blog/...` to not show the Giscus component below all the posts on the main listing page (`/blog`).
+- `isBrowser` is to prevent evaluating `window` at build time, which would creates an error.
+
 :::
 
 Last thing, to be done once your local testing is finish, is to add a file `giscus.json` at the root of the repository to [prevent other websites from showing your discussions](https://github.com/giscus/giscus/blob/main/ADVANCED-USAGE.md#giscusjson):
