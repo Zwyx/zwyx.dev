@@ -1,3 +1,4 @@
 {
-	"cSpell.words": ["Giscus", "mxschmitt", "retributing"]
+	"cSpell.words": ["Giscus", "mxschmitt", "retributing"],
+	"typescript.tsdk": "node_modules/typescript/lib"
 }
