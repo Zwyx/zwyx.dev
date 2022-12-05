@@ -6,6 +6,20 @@ require("dotenv").config();
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
+const DOMAIN = process.env.DOMAIN;
+const EDIT_URL = process.env.EDIT_URL;
+const PLAUSIBLE_SCRIPT_SRC = process.env.PLAUSIBLE_SCRIPT_SRC;
+const GOOGLE_ANALYTICS_TRACKING_ID = process.env.GOOGLE_ANALYTICS_TRACKING_ID;
+
+[DOMAIN, EDIT_URL, PLAUSIBLE_SCRIPT_SRC, GOOGLE_ANALYTICS_TRACKING_ID].forEach(
+	(value) => {
+		if (!value) {
+			console.error(`Missing environment variable`);
+			process.exit(1);
+		}
+	},
+);
+
 const envVariablesForCustomFields = [
 	["GISCUS_REPO", "giscusRepo"],
 	["GISCUS_REPO_ID", "giscusRepoId"],
@@ -30,7 +44,7 @@ const customFields = Object.fromEntries(
 const config = {
 	title: "Zwyx",
 	tagline: "Web dev",
-	url: "https://zwyx.dev",
+	url: `https://${DOMAIN}`,
 	baseUrl: "/",
 	onBrokenLinks: "throw",
 	onBrokenMarkdownLinks: "warn",
@@ -38,6 +52,14 @@ const config = {
 
 	// https://docusaurus.io/docs/deployment#docusaurusconfigjs-settings
 	trailingSlash: false,
+
+	scripts: [
+		{
+			src: PLAUSIBLE_SCRIPT_SRC,
+			defer: true,
+			"data-domain": DOMAIN,
+		},
+	],
 
 	// Even if you don't use internalization, you can use this field to set useful
 	// metadata like html lang. For example, if your site is Chinese, you may want
@@ -59,7 +81,7 @@ const config = {
 					blogSidebarTitle: "Latest posts",
 					blogSidebarCount: "ALL",
 					postsPerPage: "ALL",
-					editUrl: "https://github.com/zwyx/zwyx.github.io/tree/master/",
+					editUrl: EDIT_URL,
 					feedOptions: {
 						type: "all",
 						title: "Zwyx's blog",
@@ -71,7 +93,7 @@ const config = {
 					customCss: require.resolve("./src/css/custom.css"),
 				},
 				gtag: {
-					trackingID: process.env.GOOGLE_ANALYTICS_TRACKING_ID,
+					trackingID: GOOGLE_ANALYTICS_TRACKING_ID,
 				},
 			}),
 		],
@@ -145,7 +167,7 @@ const config = {
 				blogSidebarCount: "ALL",
 				postsPerPage: "ALL",
 				showReadingTime: false,
-				editUrl: "https://github.com/zwyx/zwyx.github.io/tree/master/",
+				editUrl: EDIT_URL,
 				feedOptions: {
 					type: "all",
 					title: "Zwyx's TILs",

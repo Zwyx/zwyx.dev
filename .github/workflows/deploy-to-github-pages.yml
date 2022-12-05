@@ -25,6 +25,9 @@ jobs:
       - run: yarn install --frozen-lockfile
 
       - env:
+          DOMAIN: ${{ secrets.DOMAIN }}
+          EDIT_URL: ${{ secrets.EDIT_URL }}
+          PLAUSIBLE_SCRIPT_SRC: ${{ secrets.PLAUSIBLE_SCRIPT_SRC }}
           GOOGLE_ANALYTICS_TRACKING_ID: ${{ secrets.GOOGLE_ANALYTICS_TRACKING_ID }}
           GISCUS_REPO: ${{ secrets.GISCUS_REPO }}
           GISCUS_REPO_ID: ${{ secrets.GISCUS_REPO_ID }}
