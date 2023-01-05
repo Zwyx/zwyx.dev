@@ -1,0 +1,80 @@
+---
+slug: indentation-for-accessibility
+title: Indentation for accessibility
+description: The real reason to use tabs over spaces
+authors: [alex]
+tags: [code, indentation, formatter, prettier]
+---
+
+It's quite obvious, **for consistently looking code, spaces are best**.
+
+However, **does one also has consistency among the people they work with**?
+
+It might not be the case: some people might have impaired vision.
+
+On an open source project, one might not even know how "consistent" are the people working with them.
+
+<!-- truncate -->
+
+Some require such big font sizes, that [being able to set the tab width to 1 is a big deal](https://www.reddit.com/r/javascript/comments/c8drjo/nobody_talks_about_the_real_reason_to_use_tabs/). (I am short-sighted, and although I don't have special needs other than wearing glasses, I can understand how useful it can be for others).
+
+After working years on projects using spaces, and years on projects using tabs, what's apparent to me is that **for most developers, tabs or spaces don't change anything**. We adapt easily to one choice or the other.
+
+**The only persons for whom it matters, are people with special needs. And for them, tabs are better.** Shouldn't this be a done deal?
+
+This is even more true these days, as many languages now have great tools to autoformat our code. If an autoformatter is available for a language, then using it should be a priority. It is SO great to not have ever to think about indentation or formatting.
+
+---
+
+With tabs, the code will not consistently look the same on everyone's screen anymore, but another thing will become consistent: **a good experience for everyone**.
+
+**This is for this exact reason that the web has introduced media queries** like [`prefers-color-scheme`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme) and [`prefers-contrast`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-contrast). We want to improve accessibility of websites; source codes deserve the same.
+
+---
+
+So, my recommendations is to set the project settings to fix the differences between operating systems that developers shouldn't have to deal with, and set some preferences like trimming trailing whitespaces.
+
+That's it. Do not set the tab width, it is a user setting.
+
+**Forcing the tab width would be like forcing a bright high contrast theme for everyone in the project.**
+
+---
+
+So for example, here's an [`.editorconfig`](https://editorconfig.org) file:
+
+```ini
+# https://editorconfig.org
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = "tab"
+trim_trailing_whitespace = true
+insert_final_newline = true
+```
+
+And a `.vscode/settings.json` file:
+
+```json
+{
+	"files.encoding": "utf8",
+	"files.eol": "\n",
+	"files.trimTrailingWhitespace": true,
+	"files.insertFinalNewline": true,
+	"files.trimFinalNewlines": true,
+	"editor.insertSpaces": false,
+	"editor.defaultFormatter": "esbenp.prettier-vscode"
+}
+```
+
+---
+
+(We sometimes read that developers who use spaces make more money. Does it sound like BS? It probably is. Developers using spaces could simply be paid more because they're older (so have old habits). Young developers (paid less) could have answered that they use tabs because they press the Tab key when indenting. And there's more, see the comments below the [original post](https://stackoverflow.blog/2017/06/15/developers-use-spaces-make-money-use-tabs/).)
+
+---
+
+**TL;DR: I recommend to use tabs and to not force their width (and to use an automatic formatter for everything else if possible).** Of cours, this doesn't apply if the project/language you work with doesn't allow it for technical reasons.
+
+---
+
+_This post was originally my answer to this [StackOverflow question](https://stackoverflow.com/questions/35649847/objective-reasons-for-using-spaces-instead-of-tabs-for-indentation/75019495#75019495)._
