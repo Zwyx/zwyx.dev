@@ -4,7 +4,6 @@
  * work well for content-centric websites.
  */
 
-/* You can override the default Infima variables here. */
 :root {
 	--ifm-color-primary: #2e8555;
 	--ifm-color-primary-dark: #29784c;
@@ -15,9 +14,28 @@
 	--ifm-color-primary-lightest: #3cad6e;
 	--ifm-code-font-size: 95%;
 	--docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+
+	/* Create the palette at https://docusaurus.io/docs/next/styling-layout */
+
+	/* Teal from Radix Colors */
+	/* --ifm-color-primary: #068475;
+	--ifm-color-primary-dark: #057769;
+	--ifm-color-primary-darker: #057063;
+	--ifm-color-primary-darkest: #045c52;
+	--ifm-color-primary-light: #079181;
+	--ifm-color-primary-lighter: #079887;
+	--ifm-color-primary-lightest: #08ac98; */
+
+	/* Purple from Radix Colors */
+	/* --ifm-color-primary: #8e4ec6;
+	--ifm-color-primary-dark: #803dbc;
+	--ifm-color-primary-darker: #7939b1;
+	--ifm-color-primary-darkest: #642f92;
+	--ifm-color-primary-light: #9b63cd;
+	--ifm-color-primary-lighter: #a26dd0;
+	--ifm-color-primary-lightest: #b68dda; */
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme="dark"] {
 	--ifm-color-primary: #25c2a0;
 	--ifm-color-primary-dark: #21af90;
