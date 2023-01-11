@@ -1,20 +1,22 @@
 // @ts-check
 
+const { env, exit } = require("process");
+
 require("dotenv").config();
 
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
-const DOMAIN = process.env.DOMAIN;
-const EDIT_URL = process.env.EDIT_URL;
-const PLAUSIBLE_SCRIPT_SRC = process.env.PLAUSIBLE_SCRIPT_SRC;
-const GOOGLE_ANALYTICS_TRACKING_ID = process.env.GOOGLE_ANALYTICS_TRACKING_ID;
+const DOMAIN = env.DOMAIN;
+const EDIT_URL = env.EDIT_URL;
+const PLAUSIBLE_SCRIPT_SRC = env.PLAUSIBLE_SCRIPT_SRC;
+const GOOGLE_ANALYTICS_TRACKING_ID = env.GOOGLE_ANALYTICS_TRACKING_ID;
 
 [DOMAIN, EDIT_URL, PLAUSIBLE_SCRIPT_SRC, GOOGLE_ANALYTICS_TRACKING_ID].forEach(
 	(value) => {
 		if (!value) {
 			console.error(`Missing environment variable`);
-			process.exit(1);
+			exit(1);
 		}
 	},
 );
@@ -28,11 +30,11 @@ const envVariablesForCustomFields = [
 
 const customFields = Object.fromEntries(
 	envVariablesForCustomFields.map(([variableName, customFieldName]) => {
-		const value = process.env[variableName];
+		const value = env[variableName];
 
 		if (!value) {
 			console.error(`Missing value for environment variable '${variableName}'`);
-			process.exit(1);
+			exit(1);
 		}
 
 		return [customFieldName, value];
@@ -77,6 +79,7 @@ const config = {
 					blogSidebarTitle: "Latest posts",
 					blogSidebarCount: "ALL",
 					postsPerPage: "ALL",
+					exclude: env.NODE_ENV !== "development" ? ["*-xx-*/*"] : undefined, // Exclude drafts
 					editUrl: EDIT_URL,
 					feedOptions: {
 						type: "all",
