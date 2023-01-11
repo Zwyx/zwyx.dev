@@ -104,11 +104,10 @@ const config = {
 			},
 			image: "img/Zwyx-236x236-android-chrome-192x192.png",
 			navbar: {
-				// title: "Zwyx",
 				logo: {
 					alt: "Zwyx logo",
 					src: "img/Zwyx-236x236-android-chrome-192x192.png",
-					href: "/blog",
+					href: "/",
 				},
 				items: [
 					{
@@ -138,19 +137,6 @@ const config = {
 		}),
 
 	plugins: [
-		[
-			"@docusaurus/plugin-client-redirects",
-			/** @type {import('@docusaurus/plugin-client-redirects').Options} */
-			({
-				redirects: [
-					{
-						from: "/",
-						to: "/blog",
-					},
-				],
-			}),
-		],
-
 		[
 			"@docusaurus/plugin-content-blog",
 			{

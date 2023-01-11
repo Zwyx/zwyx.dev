@@ -7,16 +7,18 @@ interface ImageProps extends PropsWithChildren {
 	src: string;
 	alt: string;
 	width?: string;
-	frame?: boolean;
+	withFrame?: boolean;
 	legend?: string;
+	borderRadius?: string;
 }
 
 export const Image: FC<ImageProps> = ({
 	src,
 	alt,
 	width,
+	withFrame,
 	legend: legendProp,
-	frame,
+	borderRadius,
 	children,
 }) => {
 	const legend = legendProp || children;
@@ -24,10 +26,15 @@ export const Image: FC<ImageProps> = ({
 	return (
 		<div className={clsx(style.imageWrapper, legend && style.withLegend)}>
 			<div
-				className={clsx(style.frame, frame && style.visible)}
-				style={{ width }}
+				className={clsx(style.frame, withFrame && style.visible)}
+				style={{ width, borderRadius }}
 			>
-				<img className={style.image} src={src} alt={alt} />
+				<img
+					className={style.image}
+					src={src}
+					alt={alt}
+					style={{ borderRadius }}
+				/>
 			</div>
 
 			{legend && <Legend>{legend}</Legend>}

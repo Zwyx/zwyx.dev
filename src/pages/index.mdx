@@ -1,0 +1,46 @@
+import Link from "@docusaurus/Link";
+import { Image } from "@site/src/components/Image";
+import { BlogPostCards } from "@site/src/components/BlogPostCards";
+import zwyx from "/static/img/Zwyx-236x236-android-chrome-192x192.png";
+import branches from "/blog/2021-10-23-archiving-git-branches/branches.jpg";
+import gitHashMiner from "/blog/2022-03-05-git-hash-miner/git-hash-miner.png";
+
+<div style={{ height: "48px" }} />
+
+<Image src={zwyx} alt="Zwyx" width="192px" borderRadius="100px" />
+
+<div style={{ margin: "48px", textAlign: "center" }}>
+	<div style={{ fontSize: "1.5rem" }}>
+		Hey I'm Alex, a web developer from Australia.
+	</div>
+	<div style={{ margin: "24px", fontSize: "1.2rem" }}>
+		Here are some writings you might find interesting.
+	</div>
+</div>
+
+<BlogPostCards
+	posts={[
+		{
+			title: "Git Hash Miner: mine your commit hashes!",
+			description:
+				'Following the same principle that Bitcoin uses for its proof of work, we can "mine" our Git commit hashes too!',
+			href: "/blog/git-hash-miner",
+			imageSrc: gitHashMiner,
+			imageAlt: "Git Hash Miner",
+		},
+		{
+			title: "Tidy up a Git repo by archiving branches",
+			description:
+				"Reduce the amount of branches without necessarily deleting them.",
+			href: "/blog/archiving-git-branches",
+			imageSrc: branches,
+			imageAlt: "Tree branches",
+		},
+	]}
+/>
+
+<div style={{ marginTop: "48px", textAlign: "center" }}>
+
+[See all posts](/blog)
+
+</div>

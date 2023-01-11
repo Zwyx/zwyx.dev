@@ -6,9 +6,9 @@ authors: [alex]
 tags: [code, indentation, formatter, prettier]
 ---
 
-It's quite obvious, **for consistently looking code, spaces are best**.
+It's quite obvious, for consistently looking code, spaces are best.
 
-However, **does one also has consistency among the people they work with**?
+However, does one also has consistency among the people they work with?
 
 It might not be the case: some people might have impaired vision.
 
@@ -36,7 +36,7 @@ So, my recommendations is to set the project settings to fix the differences bet
 
 That's it. Do not set the tab width, it is a user setting.
 
-**Forcing the tab width would be like forcing a bright high contrast theme for everyone in the project.**
+Forcing the tab width would be like forcing a bright high contrast theme for everyone in the project.
 
 ---
 
