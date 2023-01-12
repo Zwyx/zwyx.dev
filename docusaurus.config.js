@@ -151,6 +151,7 @@ const config = {
 				blogSidebarTitle: "Latest TILs",
 				blogSidebarCount: "ALL",
 				postsPerPage: "ALL",
+				exclude: env.NODE_ENV !== "development" ? ["*-xx-*"] : undefined, // Exclude drafts
 				showReadingTime: false,
 				editUrl: EDIT_URL,
 				feedOptions: {
