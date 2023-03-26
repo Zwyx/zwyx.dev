@@ -45,11 +45,11 @@ const customFields = Object.fromEntries(
 const config = {
 	title: "Zwyx",
 	tagline: "Web dev",
+	favicon: "img/Zwyx-220x220-rounded-favicon.ico",
 	url: `https://${DOMAIN}`,
 	baseUrl: "/",
 	onBrokenLinks: "throw",
 	onBrokenMarkdownLinks: "warn",
-	favicon: "img/Zwyx-220x220-rounded-favicon.ico",
 
 	// https://docusaurus.io/docs/deployment#docusaurusconfigjs-settings
 	trailingSlash: false,
@@ -101,7 +101,7 @@ const config = {
 	themeConfig:
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 		({
-			metadata: [{ name: "keywords", content: "web, development, blog" }],
+			metadata: [{ name: "keywords", content: "software development, web" }],
 			colorMode: {
 				respectPrefersColorScheme: true,
 			},

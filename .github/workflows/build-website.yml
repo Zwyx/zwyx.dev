@@ -1,13 +1,16 @@
+# The site is built on branch `dist`, in folder `docs`,
+# which makes the build compatible with Github Pages and Netlify
+
 on:
   push:
     branches:
       - master
   workflow_dispatch:
 
-name: Deploy to GitHub Pages
+name: Build website
 
 jobs:
-  deploy-to-github-pages:
+  build-website:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -37,13 +40,14 @@ jobs:
 
       - run: |
           git fetch
-          git switch --orphan github-pages
+          git switch --orphan dist
+          [ -d docs ] && mv docs docusaurus-docs
           mv build docs
           git add docs
           git config user.name "Zwyx - GitHub Actions"
           git config user.email "29386932+Zwyx@users.noreply.github.com>"
-          git commit -m "Push website on GitHub Pages"
-          git push --set-upstream origin --force github-pages
+          git commit -m "Build website"
+          git push --set-upstream origin --force dist
       #
       # - name: Setup tmate session
       #   if: ${{ always() }}
