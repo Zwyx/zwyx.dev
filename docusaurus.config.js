@@ -48,10 +48,7 @@ const config = {
 	favicon: "img/Zwyx-220x220-rounded-favicon.ico",
 	url: `https://${DOMAIN}`,
 	baseUrl: "/",
-	onBrokenLinks: "throw",
-	onBrokenMarkdownLinks: "warn",
 
-	// https://docusaurus.io/docs/deployment#docusaurusconfigjs-settings
 	trailingSlash: false,
 
 	scripts: [
@@ -79,7 +76,10 @@ const config = {
 					blogSidebarTitle: "Latest posts",
 					blogSidebarCount: "ALL",
 					postsPerPage: "ALL",
-					exclude: env.NODE_ENV !== "development" ? ["*-xx-*/*"] : undefined, // Exclude drafts
+					exclude:
+						env.NODE_ENV !== "development"
+							? ["*-xx-*/*", "draft*/*"] // Exclude drafts
+							: undefined,
 					editUrl: EDIT_URL,
 					feedOptions: {
 						type: "all",
