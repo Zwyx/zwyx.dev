@@ -4,7 +4,7 @@
 on:
   push:
     branches:
-      - master
+      - main
   workflow_dispatch:
 
 name: Build website
@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: master
+          ref: main
 
       - run: echo "nvmrc=$(cat .nvmrc)" >> $GITHUB_ENV
         id: nvmrc
