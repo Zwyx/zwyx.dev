@@ -2,6 +2,7 @@
 	"origins": [
 		"https://zwyx.dev",
 		"https://www.zwyx.dev",
-		"https://zwyx.github.io"
+		"https://zwyx.github.io",
+		"https://zwyx.netlify.app/"
 	]
 }

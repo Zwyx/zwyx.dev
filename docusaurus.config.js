@@ -76,10 +76,6 @@ const config = {
 					blogSidebarTitle: "Latest posts",
 					blogSidebarCount: "ALL",
 					postsPerPage: "ALL",
-					exclude:
-						env.NODE_ENV !== "development"
-							? ["*-xx-*/*", "draft*/*"] // Exclude drafts
-							: undefined,
 					editUrl: EDIT_URL,
 					feedOptions: {
 						type: "all",
@@ -151,7 +147,6 @@ const config = {
 				blogSidebarTitle: "Latest TILs",
 				blogSidebarCount: "ALL",
 				postsPerPage: "ALL",
-				exclude: env.NODE_ENV !== "development" ? ["*-xx-*"] : undefined, // Exclude drafts
 				showReadingTime: false,
 				editUrl: EDIT_URL,
 				feedOptions: {
