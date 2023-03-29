@@ -127,7 +127,7 @@ const config = {
 			},
 			footer: {
 				style: "dark",
-				copyright: `Copyright © ${new Date().getFullYear()} Zwyx. Built with Docusaurus.`,
+				copyright: `Copyright © ${new Date().getFullYear()} Zwyx. Built with Docusaurus.<br /><br /><a href="https://visitorbadge.io/status?path=zwyx.dev"><img src="https://api.visitorbadge.io/api/visitors?path=zwyx.dev&labelColor=%23555555&countColor=%236280a6&style=flat&labelStyle=none" /></a>`,
 			},
 			prism: {
 				theme: lightCodeTheme,
