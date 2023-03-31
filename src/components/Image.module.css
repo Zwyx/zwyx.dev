@@ -1,5 +1,8 @@
 .imageWrapper {
 	margin-bottom: 32px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .imageWrapper.withLegend {
@@ -7,7 +10,6 @@
 }
 
 .frame {
-	margin: 0 auto;
 	border-radius: 3px;
 	line-height: 0; /* Prevents a larger padding at the bottom */
 }
