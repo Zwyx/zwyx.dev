@@ -6,6 +6,6 @@ authors: [alex]
 tags: []
 ---
 
-<!-- truncate -->
+<!--truncate-->
 
 Remember that only header levels `##` and `###` appear in the right side bar.

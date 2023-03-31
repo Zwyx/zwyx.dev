@@ -83,6 +83,10 @@ Example: the command `gmr -a badc0de` will search for a commit hash starting wit
 
 `git-hash-miner` creates a worker for each CPU core on your machine. Roughly, you should be able to mine a hash with a prefix of up to 6 or 7 characters in a few minutes.
 
+:::tip Pro tip
+I added `git-hash-miner` to the file `~/.nvm/default-packages`, so [nvm](https://github.com/nvm-sh/nvm) automatically installs it when I install a new version of Node.
+:::
+
 :::note
 Note that there are other projects of this kind around the internet, some of them more performant as they use GPUs. They are, however, more complex to install than `git-hash-miner`, which is a simple Node script.
 :::

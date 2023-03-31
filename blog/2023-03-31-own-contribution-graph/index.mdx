@@ -1,0 +1,78 @@
+---
+slug: own-contribution-graph
+title: Consolidate your contribution graph
+description: Combine your contributions from any repository on your GitHub contribution graph.
+authors: [alex]
+tags: [git]
+---
+
+import { Image } from "@site/src/components/Image";
+import skylineZwyx2021 from "./skyline-zwyx-2021.jpg";
+import contributionGraph from "./contribution-graph-rotated--5deg.jpg";
+import skylineZwyx2021Printed from "./skyline-zwyx-2021-printed.jpg";
+
+<Image src={skylineZwyx2021} alt="GitHub Skyline" legend="GitHub Skyline" />
+
+Combine your contributions from any repository on your GitHub contribution graph.
+
+<!--truncate-->
+
+---
+
+## The GitHub contribution graph
+
+A friend and I used to work at the same company, where we were using GitHub.
+
+Every year, our contribution graphs looked nice and it was kinda rewarding.
+
+<Image
+	src={contributionGraph}
+	alt="Contribution graph"
+	legend="A contribution graph on GitHub"
+/>
+
+And you can do much more than just look at the green graph on your GitHub profile page: [GitHub Skyline](https://skyline.github.com/) lets you generate a 3D version of it — which is the image at the top of this article. You can then download the 3D file and print it:
+
+<Image
+	src={skylineZwyx2021Printed}
+	alt="GitHub Zwyx 2021"
+	legend="Code trophy!"
+/>
+
+## Not on GitHub anymore?
+
+The companies we work for now however, use other Git hosting providers. Which means... no more contribution graphs on GitHub 😢
+
+This is where Tim had a beautiful idea: create a tool that regularly scans your work repositories, and creates empty commits in a repository hosted on GitHub! Each empty commit corresponds to a commit made by yourself in your work repositories, and is made with the same commit date.
+
+The repository gathering all these empty commits can be private on GitHub. However, even if you make it public, dates are the only information comming from your work repo. There is absolutely no content — so no risk of leaking anything.
+
+Brilliant!
+
+## Usage
+
+The tool is [own-contribution-graph](https://npmjs.com/package/own-contribution-graph). To use it simply:
+
+- install the package:
+
+```bash
+npm i -g own-contribution-graph
+```
+
+- create the configuration file following the instructions in the [ReadMe](https://npmjs.com/package/own-contribution-graph),
+
+- run the following command:
+
+```bash
+owncontributiongraph --config=<path-to-the-json-config-file>
+```
+
+You can then create a Cron task that executes this command every week.
+
+:::tip Pro tip
+I added `own-contribution-graph` to the file `~/.nvm/default-packages`, so [nvm](https://github.com/nvm-sh/nvm) automatically installs it when I install a new version of Node.
+:::
+
+Our contributions graphs are alive again!
+
+There is a difference though: the merge method we used to use was _rebase merging_, where all commits from a feature branch are applied one by one on the main branch. Now we use _squash merging_, were all commits are squashed together into one commit that is applied on the main branch. So less contributions appears on the graph.
