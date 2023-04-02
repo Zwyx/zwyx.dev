@@ -1,0 +1,223 @@
+---
+slug: your-dotfiles-in-a-git-repo
+title: Your dotfiles in a Git repo
+description: Track changes to your config files using a Git repository.
+authors: [alex]
+tags: [dotfiles, git]
+---
+
+import { Image } from "@site/src/components/Image";
+import gears from "./gears-unsplash-xRDuEeG1TVI.jpg";
+
+<Image src={gears} alt="Gears" />
+
+Track changes in your config files using a Git repository.
+
+<!--truncate-->
+
+---
+
+## Dotfiles
+
+_Dotfiles_ is the name given to the tiny text files containing the configuration for a piece of software. They're often placed in the your home directory and start with a dot to be hidable. We'll not limit ourselves to strictly dotfiles in this article though, what we'll do apply to any configuration file.
+
+Backing up these files and track changes to them is a good idea. It will be useful if you have to reinstall your system or set up a new machine, and, probably more often, you can restore your configuration if the corresponding software blows a gasket. It can happened with VS Code and its feature "Settings Sync" for instance: I was using VS Code on my machine and on [GitHub.dev](https://github.dev/), and settings got messed up. Thanks to the fact that my VS Code's config is tracked in Git, I just had to discard the current changes to have my config back.
+
+## Using Git to track them
+
+Git is the first choice to track changes in text files. However, all these config are in different places on the file system.
+
+So how to gather them in one Git repository? There are a few methods:
+
+### 1. Create hard links or symlinks
+
+This method is a pain: creating all the links is cumbersome, and some software might delete and recreate their configuration files, breaking the links at the same without us noticing it.
+
+### 2. Make your home directory the root of your Git config repository, and add only the files you want to track
+
+This isn't recommended if you have other Git repositories anywhere in your home directory, as there would be a risk of interference.
+
+### 3. Use a bare Git repository and set its worktree to your home directory
+
+The idea is to create a bare repository — which is simply a Git repository without a work tree — and then set its worktree to your home directory.
+
+> _How is this different from method 2?_
+>
+> Nothing shows that the home folder is the root of a repo. `git`, run in your home folder, will not see it as a repository, so has no risk of interfering with other repos present in your home folder.
+
+> _If we set the worktree of the bare repository... then it's not bare anymore!_
+>
+> Indeed. This method is known as the "bare repo method", but it might just be in order to avoid confusion with method 2. We actually don't need a bare repo, we just need to change the location of a repo's worktree. Don't be confused by this, or worried that it's too complex.
+
+This article is about setting up this method.
+
+:::info
+If you're not keen to set this up yourself, or would like to have advanced features, have a look at existing dotfile managers. There are [plenty](https://dotfiles.github.io/utilities/), and [chezmoi](https://www.chezmoi.io/) seems to have become a reference in recent years.
+:::
+
+## Setup
+
+:::caution
+Please read carefully and only execute commands that you fully understand. Wrong Git commands executed anywhere in your home directory could lead to a loss of data.
+:::
+
+Start by creating a bare repository:
+
+```bash
+git init --bare ~/my-config
+```
+
+The folder `~/my-config` now contains the config repository. Now we want to set its worktree to be the home directory (replace `<your-name>` in the block below):
+
+```bash
+cd ~/my-config
+git config --unset core.bare
+git config core.worktree '/home/<your-name>'
+git config status.showUntrackedFiles no
+```
+
+The file `~/my-config/config` should look like this:
+
+```ini
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	worktree = /home/<your-name>
+[status]
+	showUntrackedFiles = no
+```
+
+Let's add two functions in your `.zshrc` (or equivalent) to easily add and untrack config files:
+
+```bash
+# We use functions instead of aliases to have folder and file name completion
+config-add() {
+	git --git-dir="$HOME/repo/config/.git-bare" add -f $@
+}
+config-untrack() {
+	git --git-dir="$HOME/repo/config/.git-bare" rm --cached $@
+}
+```
+
+## Usage
+
+### Adding files to the config
+
+```bash
+config-add .zshrc
+```
+
+### Untrack files from the config
+
+```bash
+config-untrack .zshrc
+```
+
+### Commit, push, etc.
+
+:::danger
+Execute regular git commands in your config repository — `git add`, `git commit`, `git push`, etc. **HOWEVER**, be very careful: commands like `git clean` could delete every untracked files from the home directory!
+:::
+
+That's it. Your config files are tracked in a git repo. Keep reading for a few more tips.
+
+### Set up a Cron task
+
+You can create a cron job that commits and pushes your config once a week:
+
+- create a script containing:
+
+```bash
+cd "$HOME/my-config"
+git add -A
+git commit -a -m "Weekly commit"
+git push
+```
+
+- run:
+
+```bash
+crontab -e
+```
+
+- and append:
+
+```
+30 12 * * 5 <path-to-script>
+```
+
+You can also add other useful tasks in the script, just before the the three `git` commands. For instance:
+
+- `code --list-extensions > ~/.config/vscode-extensions.txt`
+- `dconf dump / > ~/.config/dconf.ini`
+- `crontab -l > ~/.config/crontab.txt`
+
+## Special cases
+
+### Tracking files from other Git repositories
+
+Adding files that are already present in another Git repository seems to be impossible.
+
+For instance, I didn't find a way to add `~/.nvm/default-packages`, because `~/.nvm` is a Git repository.
+
+So for this kind of file, I use the hard link method:
+
+```bash
+ln `~/.nvm/default-packages` `~/my-config/default-packages`
+```
+
+### Sublime Merge users
+
+At the moment, Sublime Merge [ignores the property `status.showUntrackedFiles`](https://github.com/sublimehq/sublime_merge/issues/1544) and will show all the untracked files of the home folder.
+
+To prevent this, it is possible to add a `.gitignore` in the repo's root folder. This `.gitignore` mainly needs to contain a `*`, to hide all untracked files, although you can also "unhide" specific subfolders if you want your weekly commit to automatically includes new files from these folders.
+
+Here's an example:
+
+```txt showLineNumbers
+/*
+
+!.gitignore
+
+!.config/Code
+.config/Code/*
+!.config/Code/User
+.config/Code/User/*
+!.config/Code/User/snippets
+```
+
+- line 1: hide everything;
+- line 3: unhide the file `.gitignore`;
+- line 5: unhide the folder `.config/Code`...
+- line 6: but hide everything inside this folder;
+- line 7: unhide the folder `.config/Code/User`...
+- line 8: but hide everything inside this folder;
+- line 9: unhide the folder `.config/Code/User/snippets`, so all files in this folder will be tracked in our config.
+
+:::caution
+This `.gitignore` file has a side effect on `git checkout`. Indeed, usually, when cloning a repository and running `git checkout`, if some files in the worktree are different than the ones in the repository, git displays the message `error: The following untracked working tree files would be overwritten by checkout: ...`. But with this `.gitignore` in the home directory, `git checkout` will simply override the files that are in the home directory by the ones from the repository. Without warning!
+
+However, the point it to be able to use Sublime Merge, so we don't need `git checkout`. We simply open the repository in Sublime Merge, keep the files we want, and we discard the others.
+:::
+
+Sublime Merge has another bug when working with a repository whose work tree isn't next to the repo itself: [the corresponding tab isn't reopen correctly](https://github.com/sublimehq/sublime_merge/issues/1670). So, here's an alias to quickly open your config repo in Sublime Merge:
+
+```bash
+alias config-open-in-sublime-merge='"$HOME/.config/open-in-sublime-merge.sh" "$HOME/my-config"'
+```
+
+```bash title="open-in-sublime-merge.sh"
+#!/bin/bash
+
+if pgrep sublime_merge; then
+	if [[ -d $1 ]]; then
+		/opt/sublime_merge/sublime_merge "$1"
+	else
+		/opt/sublime_merge/sublime_merge "$(dirname "$1")"
+	fi
+else
+	xmessage "Start Sublime Merge before to prevent losing all open tabs."
+fi
+```
+
+As you can see, we check that `sublime_merge` is already running before attempting to open the repository. This is because of [yet another bug in Sublime Merge](https://github.com/sublimehq/sublime_merge/issues/309) (at this point you might be wondering why I use this tool... I swear it's a great tool, altough it's definitely frustrating to be paying for a licence and barely receive any reply to the bug reports I create).
