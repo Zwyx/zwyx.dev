@@ -47,7 +47,7 @@ and generates a SHA-1 hash with them. That's the commit hash.
 To "mine" a commit hash, we need to generate multiple hashes until we find one that respects our rule (for instance, starts with a particular prefix). But to make each hash different than the previous one, we need to change something in the details listed above.
 :::
 
-The package `git-hash-miner` appends a hexadecimal number to the committer name of the last commit, regenerates the SHA-1 hash of the commit details, and continues by incrementing the hexadecimal number at each round until a winning hash is found.
+I made the package [`git-hash-miner`](https://npmjs.com/package/git-hash-miner), which appends a hexadecimal number to the committer name of the last commit, regenerates the SHA-1 hash of the commit details, and continues by incrementing the hexadecimal number at each round until a winning hash is found.
 
 Once it is found, `git-hash-miner` can automatically amend the commit to add the hexadecimal number to the committer name, and let Git handle the commit and generate the SHA-1, which will be the winning one found just before.
 

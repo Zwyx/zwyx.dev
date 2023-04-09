@@ -17,7 +17,7 @@ export const BlogPostCards: FC<BlogPostCardsProps> = ({ posts }) => {
 	return (
 		<div className={style.blogPostCards}>
 			{posts.map(({ title, href, description, imageSrc, imageAlt }) => (
-				<Link to={href} className={clsx(style.blogPostCard)}>
+				<Link key={href} to={href} className={clsx(style.blogPostCard)}>
 					<div className={style.imageWrapper}>
 						<img className={style.image} src={imageSrc} alt={imageAlt} />
 					</div>
