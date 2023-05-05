@@ -9,17 +9,14 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 const DOMAIN = env.DOMAIN;
 const EDIT_URL = env.EDIT_URL;
-const PLAUSIBLE_SCRIPT_SRC = env.PLAUSIBLE_SCRIPT_SRC;
 const GOOGLE_ANALYTICS_TRACKING_ID = env.GOOGLE_ANALYTICS_TRACKING_ID;
 
-[DOMAIN, EDIT_URL, PLAUSIBLE_SCRIPT_SRC, GOOGLE_ANALYTICS_TRACKING_ID].forEach(
-	(value) => {
-		if (!value) {
-			console.error(`Missing environment variable`);
-			exit(1);
-		}
-	},
-);
+[DOMAIN, EDIT_URL, GOOGLE_ANALYTICS_TRACKING_ID].forEach((value) => {
+	if (!value) {
+		console.error(`Missing environment variable`);
+		exit(1);
+	}
+});
 
 const envVariablesForCustomFields = [
 	["GISCUS_REPO", "giscusRepo"],
@@ -51,13 +48,7 @@ const config = {
 
 	trailingSlash: false,
 
-	scripts: [
-		{
-			src: PLAUSIBLE_SCRIPT_SRC,
-			defer: true,
-			"data-domain": DOMAIN,
-		},
-	],
+	scripts: [],
 
 	i18n: {
 		defaultLocale: "en",
