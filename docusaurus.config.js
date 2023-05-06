@@ -9,9 +9,17 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 const DOMAIN = env.DOMAIN;
 const EDIT_URL = env.EDIT_URL;
+const ALGOLIA_APP_ID = env.ALGOLIA_APP_ID;
+const ALGOLIA_API_KEY = env.ALGOLIA_API_KEY;
 const GOOGLE_ANALYTICS_TRACKING_ID = env.GOOGLE_ANALYTICS_TRACKING_ID;
 
-[DOMAIN, EDIT_URL, GOOGLE_ANALYTICS_TRACKING_ID].forEach((value) => {
+[
+	DOMAIN,
+	EDIT_URL,
+	ALGOLIA_APP_ID,
+	ALGOLIA_API_KEY,
+	GOOGLE_ANALYTICS_TRACKING_ID,
+].forEach((value) => {
 	if (!value) {
 		console.error(`Missing environment variable`);
 		exit(1);
@@ -109,12 +117,21 @@ const config = {
 						label: "Today I Learnt",
 					},
 					{
+						type: "search",
+						position: "right",
+					},
+					{
 						href: "https://github.com/Zwyx",
 						className: "header-github-link",
 						"aria-label": "GitHub",
 						position: "right",
 					},
 				],
+			},
+			algolia: {
+				appId: ALGOLIA_APP_ID,
+				apiKey: ALGOLIA_API_KEY,
+				indexName: "zwyx",
 			},
 			footer: {
 				style: "dark",
