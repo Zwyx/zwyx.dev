@@ -6,6 +6,10 @@
 	"files.trimFinalNewlines": true,
 	"editor.insertSpaces": false,
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.codeActionsOnSave": {
+		"source.organizeImports": true
+	},
 	"typescript.tsdk": "node_modules/typescript/lib",
+	"typescript.enablePromptUseWorkspaceTsdk": true,
 	"cSpell.words": ["Giscus", "Infima", "mxschmitt", "retributing"]
 }
