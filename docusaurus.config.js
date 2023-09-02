@@ -11,6 +11,7 @@ const DOMAIN = env.DOMAIN;
 const EDIT_URL = env.EDIT_URL;
 const ALGOLIA_APP_ID = env.ALGOLIA_APP_ID;
 const ALGOLIA_API_KEY = env.ALGOLIA_API_KEY;
+const PLAUSIBLE_SCRIPT_SRC = env.PLAUSIBLE_SCRIPT_SRC;
 const GOOGLE_ANALYTICS_TRACKING_ID = env.GOOGLE_ANALYTICS_TRACKING_ID;
 
 [
@@ -18,6 +19,7 @@ const GOOGLE_ANALYTICS_TRACKING_ID = env.GOOGLE_ANALYTICS_TRACKING_ID;
 	EDIT_URL,
 	ALGOLIA_APP_ID,
 	ALGOLIA_API_KEY,
+	PLAUSIBLE_SCRIPT_SRC,
 	GOOGLE_ANALYTICS_TRACKING_ID,
 ].forEach((value) => {
 	if (!value) {
@@ -56,7 +58,13 @@ const config = {
 
 	trailingSlash: false,
 
-	scripts: [],
+	scripts: [
+		{
+			src: PLAUSIBLE_SCRIPT_SRC,
+			defer: true,
+			"data-domain": DOMAIN,
+		},
+	],
 
 	i18n: {
 		defaultLocale: "en",
