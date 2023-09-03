@@ -31,7 +31,7 @@ Every year, our contribution graphs looked nice and it was kinda rewarding.
 	legend="A contribution graph on GitHub"
 />
 
-And you can do much more than just look at the green graph on your GitHub profile page: [GitHub Skyline](https://skyline.github.com/) lets you generate a 3D version of it — which is the image at the top of this article. You can then download the 3D file and print it:
+You can do more than just look at it on your GitHub profile page: [GitHub Skyline](https://skyline.github.com/) lets you generate a 3D version of it — which is the image at the top of this article. You can then download the 3D file and print it:
 
 <Image
 	src={skylineZwyx2021Printed}
@@ -43,15 +43,15 @@ And you can do much more than just look at the green graph on your GitHub profil
 
 The companies we work for now however, use other Git hosting providers. Which means... no more contribution graphs on GitHub 😢
 
-This is where Tim had a beautiful idea: create a tool that regularly scans your work repositories, and creates empty commits in a repository hosted on GitHub! Each empty commit corresponds to a commit made by yourself in your work repositories, and is made with the same commit date.
+This is where Tim had a beautiful idea: create a tool that regularly scans our work repositories, and creates empty commits in a repository hosted on GitHub! Each empty commit corresponds to a commit made by ourselves in our work repositories, and is made with the same commit date.
 
-The repository gathering all these empty commits can be private on GitHub. However, even if you make it public, dates are the only information comming from your work repo. There is absolutely no content — so no risk of leaking anything.
+The repository gathering all these empty commits can be private on GitHub. (Although even if it's public, no content is present in it.)
 
 Brilliant!
 
 ## Usage
 
-The tool is [own-contribution-graph](https://npmjs.com/package/own-contribution-graph). To use it simply:
+The tool is [own-contribution-graph](https://npmjs.com/package/own-contribution-graph). To use it, simply:
 
 - install the package:
 
@@ -67,10 +67,11 @@ npm i -g own-contribution-graph
 owncontributiongraph --config=<path-to-the-json-config-file>
 ```
 
-You can then create a Cron task that executes this command every week.
+:::tip
 
-:::tip Pro tip
-I added `own-contribution-graph` to the file `~/.nvm/default-packages`, so [nvm](https://github.com/nvm-sh/nvm) automatically installs it when I install a new version of Node.
+- I added `own-contribution-graph` to the file `~/.nvm/default-packages`, so [nvm](https://github.com/nvm-sh/nvm) automatically installs it when I install a new version of Node.
+- I created a Cron task that executes this command every week, and push to a private GitHub repository.
+
 :::
 
 Our contributions graphs are alive again!
