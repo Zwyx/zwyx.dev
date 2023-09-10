@@ -1,21 +1,26 @@
 # The site is built on branch `dist`, in folder `docs`,
 # which makes the build compatible with Github Pages and Netlify
 
+name: Build website
+
 on:
   push:
     branches:
       - main
   workflow_dispatch:
 
-name: Build website
+permissions:
+  contents: write
+
+concurrency:
+  group: "build-website"
+  cancel-in-progress: true
 
 jobs:
   build-website:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: main
+      - uses: actions/checkout@v4
 
       - run: echo "nvmrc=$(cat .nvmrc)" >> $GITHUB_ENV
         id: nvmrc
@@ -43,7 +48,6 @@ jobs:
         run: yarn build
 
       - run: |
-          git fetch
           git switch --orphan dist
           [ -d docs ] && mv docs docusaurus-docs
           mv build docs
