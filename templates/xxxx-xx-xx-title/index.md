@@ -2,6 +2,7 @@
 slug:
 title:
 description:
+image:
 authors: [alex]
 tags: []
 draft: true
