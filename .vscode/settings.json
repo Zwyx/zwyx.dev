@@ -11,5 +11,12 @@
 	},
 	"typescript.tsdk": "node_modules/typescript/lib",
 	"typescript.enablePromptUseWorkspaceTsdk": true,
-	"cSpell.words": ["Giscus", "Infima", "mxschmitt", "retributing"]
+	"cSpell.words": [
+		"Giscus",
+		"Infima",
+		"mxschmitt",
+		"retributing",
+		"Shadcn",
+		"shadcnui"
+	]
 }

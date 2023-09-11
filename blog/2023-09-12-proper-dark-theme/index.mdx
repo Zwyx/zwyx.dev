@@ -1,0 +1,151 @@
+---
+slug: proper-dark-theme
+title: Proper dark theme
+description: Three states, no flash, reactive.
+image: ./dark-theme.jpg
+authors: [alex]
+tags: [dark theme, vite, typescript, react, tailwind, shadcnui]
+---
+
+import { Image } from "@site/src/components/Image";
+import darkTheme from "./dark-theme.jpg";
+
+<Image src={darkTheme} alt="Translations" />
+
+Three states, no flash, reactive. Test it at [zwyx.github.io/proper-dark-theme](https://zwyx.github.io/proper-dark-theme)
+
+<!--truncate-->
+
+---
+
+Does implementing dark theme manually sound like reinventing the wheel?
+
+:::tip
+The problem with dark theme libraries is that they depend on a specific stack.
+
+And the problem with UI/component libraries is that they often — _incredibly often_, based on the dozen I've tested — don't correctly implement the following requirements.
+:::
+
+## Three requirements for a proper dark theme
+
+### Three states
+
+The user must be able to choose `light`, `dark`, or `same as device` (which should be the default).
+
+### No flash
+
+If the current theme is dark, the page must not display a white background while it loads (very annoying at night, and possibly problematic for users with vision disabilities).
+
+### Reactive
+
+Changing the theme — including the device's theme, when `same as device` is selected — should be instantly effective on the page, without requiring to refresh it.
+
+:::tip
+In order to have these features, and not being dependent on a specific stack, I found that the best it to implement dark theme manually.
+
+Once we know how to do it, we can reuse it everywhere. Instead of installing it as a library, we copy and paste it. We « own the code », which is a philosophy I first discovered with [Shadcn UI](https://ui.shadcn.com/docs).
+:::
+
+## Implementation
+
+Our way of doing it will be:
+
+- have JavaScript applying a class `light` or `dark` to the root HTML element, and
+- have different CSS variables depending on this class.
+
+:::info
+A demonstration of this implementation is deployed [here](https://zwyx.github.io/proper-dark-theme/), and its code is present [here](https://github.com/Zwyx/proper-dark-theme).
+:::
+
+### The CSS
+
+CSS variables make it easy to have our app reactive: changing the class on the root HTML element instantly change all the color in the website, no refresh necessary.
+
+```css
+:root {
+	/* variables for light theme */
+	--background: 0 0% 100%;
+	--foreground: 222.2 84% 4.9%;
+}
+
+:root.dark {
+	/* variables for dark theme */
+	--background: 222.2 84% 4.9%;
+	--foreground: 210 40% 98%;
+}
+```
+
+### The HTML
+
+To prevent the flash, we want to apply the `light` or `dark` class as soon as possible. This is what this small block of JavaScript, to be placed in the `head` of our HTML, does:
+
+```html
+<script type="text/javascript">
+	// Set the theme's class as soon as possible to prevent a flash of the wrong theme
+
+	var lightThemeName = "light";
+	var darkThemeName = "dark";
+
+	var theme;
+
+	try {
+		theme = localStorage.getItem("theme");
+	} catch {}
+
+	if (theme === lightThemeName || theme === darkThemeName) {
+		document.documentElement.classList.add(theme);
+	} else if (matchMedia("(prefers-color-scheme: dark)").matches) {
+		document.documentElement.classList.add(darkThemeName);
+	} else {
+		document.documentElement.classList.add(lightThemeName);
+	}
+</script>
+```
+
+### The JS
+
+The JS has to:
+
+- allow the user to change their theme preference,
+- store it in local storage,
+- listen for changes of the system's theme,
+- update the HTML root element's class according to the user preference and the system's theme.
+
+The code is a bit long so I won't include it here. Instead, I invite you to have a look at the [implementation made with TypeScript and React](https://github.com/Zwyx/proper-dark-theme/blob/main/src/lib/ThemeContext.tsx) for the demo project.
+
+## Note on the three states
+
+I consider this three-state implementation to be the best at the moment, but I hope that it won't be necessary in the future. Indeed, when all operating systems and all web browsers will implement dark theme seemlessly, then offering to the user the possibility of changing the theme for a particular website might start to be seen as unnecessary. Or at least, the setting could be buried in a dialog box instead of being directly available on the top right of the page.
+
+## Bonus: with less JavaScript
+
+Here's another way of defining the CSS variables, which greatly reduces the amount of JS required. We use a media query to apply the dark theme when it's the system preference and the user hasn't selected the light theme.
+
+```css
+:root {
+	/* variables for light theme */
+	--background: 0 0% 100%;
+	--foreground: 222.2 84% 4.9%;
+}
+
+:root.dark {
+	/* variables for dark theme */
+	--background: 222.2 84% 4.9%;
+	--foreground: 210 40% 98%;
+}
+
+@media only screen and (prefers-color-scheme: dark) {
+	:root:not(.light) {
+		/* variables for dark theme */
+		--background: 222.2 84% 4.9%;
+		--foreground: 210 40% 98%;
+	}
+}
+```
+
+By doing that, the JS doesn't have to listen for changes of the system's theme anymore.
+
+However, it has a few drawbacks:
+
+- we have to duplicate the declaration of the dark theme's variables,
+- the app cannot know which theme is currently displayed when the user preference is to follow the system's theme (Tailwind's `dark:` selector, for instance, doesn't work).

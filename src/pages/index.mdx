@@ -6,10 +6,13 @@ import Link from "@docusaurus/Link";
 import { Image } from "@site/src/components/Image";
 import { BlogPostCards } from "@site/src/components/BlogPostCards";
 import zwyx from "/static/img/Zwyx-236x236-android-chrome-192x192.png";
-import branches from "/blog/2021-10-23-archiving-git-branches/branches.jpg";
-import gitHashMiner from "/blog/2022-03-05-git-hash-miner/git-hash-miner.png";
+import darkTheme from "/blog/2023-09-12-proper-dark-theme/dark-theme.jpg";
 import gears from "/blog/2023-04-02-your-dotfiles-in-a-git-repo/gears-unsplash-xRDuEeG1TVI.jpg";
 import skylineZwyx2021Printed from "/blog/2023-03-31-own-contribution-graph/skyline-zwyx-2021.jpg";
+import gitHashMiner from "/blog/2022-03-05-git-hash-miner/git-hash-miner.jpg";
+import branches from "/blog/2021-10-23-archiving-git-branches/branches.jpg";
+
+<div class="zwyx-main-page" />
 
 <div style={{ height: "48px" }} />
 
@@ -26,6 +29,13 @@ import skylineZwyx2021Printed from "/blog/2023-03-31-own-contribution-graph/skyl
 
 <BlogPostCards
 	posts={[
+		{
+			title: "Proper dark theme",
+			description: "Three states, no flash, reactive.",
+			href: "/blog/proper-dark-theme",
+			imageSrc: darkTheme,
+			imageAlt: "Dark theme",
+		},
 		{
 			title: "Your dotfiles in a Git repo",
 			description: "Track changes to your config files using a Git repository.",

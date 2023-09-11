@@ -1,8 +1,8 @@
 .blogPostCards {
 	display: flex;
-	justify-content: space-around;
+	justify-content: center;
 	flex-wrap: wrap;
-	gap: 48px 0;
+	gap: 48px;
 }
 
 .blogPostCard {
