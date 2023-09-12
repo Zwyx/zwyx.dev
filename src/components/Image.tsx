@@ -7,6 +7,8 @@ interface ImageProps extends PropsWithChildren {
 	src: string;
 	alt: string;
 	width?: string;
+	/** Providing both `width` and `height` isn't necessary, but doing so prevents layout shift */
+	height?: string;
 	withFrame?: boolean;
 	legend?: string;
 	borderRadius?: string;
@@ -16,6 +18,7 @@ export const Image: FC<ImageProps> = ({
 	src,
 	alt,
 	width,
+	height,
 	withFrame,
 	legend: legendProp,
 	borderRadius,
@@ -27,7 +30,7 @@ export const Image: FC<ImageProps> = ({
 		<div className={clsx(style.imageWrapper, legend && style.withLegend)}>
 			<div
 				className={clsx(style.frame, withFrame && style.visible)}
-				style={{ width, borderRadius }}
+				style={{ width, height, borderRadius }}
 			>
 				<img
 					className={style.image}
