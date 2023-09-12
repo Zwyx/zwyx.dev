@@ -14,7 +14,6 @@ const ALGOLIA_API_KEY = env.ALGOLIA_API_KEY;
 const PLAUSIBLE_SCRIPT_SRC = env.PLAUSIBLE_SCRIPT_SRC;
 const UMAMI_SCRIPT_SRC = env.UMAMI_SCRIPT_SRC;
 const UMAMI_WEBSITE_ID = env.UMAMI_WEBSITE_ID;
-const GOOGLE_ANALYTICS_TRACKING_ID = env.GOOGLE_ANALYTICS_TRACKING_ID;
 
 [
 	DOMAIN,
@@ -24,7 +23,6 @@ const GOOGLE_ANALYTICS_TRACKING_ID = env.GOOGLE_ANALYTICS_TRACKING_ID;
 	PLAUSIBLE_SCRIPT_SRC,
 	UMAMI_SCRIPT_SRC,
 	UMAMI_WEBSITE_ID,
-	GOOGLE_ANALYTICS_TRACKING_ID,
 ].forEach((value) => {
 	if (!value) {
 		console.error(`Missing environment variable`);
@@ -103,9 +101,6 @@ const config = {
 				},
 				theme: {
 					customCss: require.resolve("./src/css/custom.css"),
-				},
-				gtag: {
-					trackingID: GOOGLE_ANALYTICS_TRACKING_ID,
 				},
 			}),
 		],

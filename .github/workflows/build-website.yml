@@ -40,7 +40,6 @@ jobs:
           PLAUSIBLE_SCRIPT_SRC: ${{ secrets.PLAUSIBLE_SCRIPT_SRC }}
           UMAMI_SCRIPT_SRC: ${{ secrets.UMAMI_SCRIPT_SRC }}
           UMAMI_WEBSITE_ID: ${{ secrets.UMAMI_WEBSITE_ID }}
-          GOOGLE_ANALYTICS_TRACKING_ID: ${{ secrets.GOOGLE_ANALYTICS_TRACKING_ID }}
           GISCUS_REPO: ${{ secrets.GISCUS_REPO }}
           GISCUS_REPO_ID: ${{ secrets.GISCUS_REPO_ID }}
           GISCUS_CATEGORY: ${{ secrets.GISCUS_CATEGORY }}
