@@ -18,13 +18,10 @@ Three states, no flash, reactive. Test it at [zwyx.github.io/proper-dark-theme](
 
 ---
 
-Does implementing dark theme manually sound like reinventing the wheel?
+Altough implementing dark theme manually might sound like reinventing the wheel, it's actually easy and there are good reasons to do it:
 
-:::tip
-The problem with dark theme libraries is that they depend on a specific stack.
-
-And the problem with UI/component libraries is that they often — _incredibly often_, based on the dozen I've tested — don't correctly implement the following requirements.
-:::
+- dark theme libraries depend on a specific stack,
+- UI/component libraries often — _incredibly often_, based on the dozen I've tested — don't correctly implement the following requirements.
 
 ## Three requirements for a proper dark theme
 
@@ -104,18 +101,37 @@ To prevent the flash, we want to apply the `light` or `dark` class as soon as po
 
 ### The JS
 
-The JS has to:
+The JS has to maintain two state variables:
 
-- allow the user to change their theme preference,
+- the user preference: `light`, `dark`, or `same as devices`
+- the currently displayed theme:
+  - `light`, when:
+    - the user preference is `light`
+    - the user preference is `same as device` and the device's theme is light
+  - `dark`, when:
+    - the user preference is `dark`
+    - the user preference is `same as device` and the device's theme is dark
+
+To do that, the JS has to:
+
+- react to changes of the user's theme preference,
 - store it in local storage,
-- listen for changes of the system's theme,
+- listen for changes of the system's theme, which is done by adding an event listener to a media query:
+
+```ts
+matchMedia("(prefers-color-scheme: dark)")
+	.addEventListener("change", ()=>{ ... });
+```
+
 - update the HTML root element's class according to the user preference and the system's theme.
 
-The code is a bit long so I won't include it here. Instead, I invite you to have a look at the [implementation made with TypeScript and React](https://github.com/Zwyx/proper-dark-theme/blob/main/src/lib/ThemeContext.tsx) for the demo project.
+I won't include the rest of the code here, instead I invite you to have a look at the [implementation made with TypeScript and React](https://github.com/Zwyx/proper-dark-theme/blob/main/src/lib/ThemeContext.tsx) for the demo project.
 
-## Note on the three states
+## Sidenote
 
-I consider this three-state implementation to be the best at the moment, but I hope that it won't be necessary in the future. Indeed, when all operating systems and all web browsers will implement dark theme seemlessly, then offering to the user the possibility of changing the theme for a particular website might start to be seen as unnecessary. Or at least, the setting could be buried in a dialog box instead of being directly available on the top right of the page.
+I consider this three-state implementation to be the best at the moment, but I hope that it won't be necessary in the future.
+
+When all operating systems and all web browsers will implement dark theme seemlessly, then offering to the user the possibility to change the theme for a particular website might start to be seen as unnecessary. At least, the setting could be buried in a dialog box instead of being directly available on the top right of the page.
 
 ## Bonus: with less JavaScript
 
@@ -145,7 +161,7 @@ Here's another way of defining the CSS variables, which greatly reduces the amou
 
 By doing that, the JS doesn't have to listen for changes of the system's theme anymore.
 
-However, it has a few drawbacks:
+This is how I used to do it. However, it has a few drawbacks:
 
 - we have to duplicate the declaration of the dark theme's variables,
-- the app cannot know which theme is currently displayed when the user preference is to follow the system's theme (Tailwind's `dark:` selector, for instance, doesn't work).
+- the app cannot know which theme is currently displayed when the user preference is `same as device` (Tailwind's `dark:` selector, for instance, doesn't work).
