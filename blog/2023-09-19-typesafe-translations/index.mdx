@@ -1,0 +1,162 @@
+---
+slug: typesafe-translations
+title: Typesafe translations with TypeScript and i18next
+description: Use TypeScript to ensure the validity of your i18next translations.
+image: ./typesafe-translations.jpg
+authors: [alex]
+tags: [i18n, i18next, vite, typescript, react, tailwind, shadcnui]
+---
+
+import { Image } from "@site/src/components/Image";
+import translations from "./typesafe-translations.jpg";
+import screenshot2 from "./2.jpg";
+import screenshot3 from "./3.jpg";
+import screenshot4 from "./4.jpg";
+import screenshot5 from "./5.jpg";
+
+<Image src={translations} alt="Translations" />
+
+Use TypeScript to ensure the validity of your i18next translations.
+
+<!--truncate-->
+
+---
+
+:::info
+A demo project is available at [github.com/zwyx/typesafe-translations](https://github.com/zwyx/typesafe-translations)
+:::
+
+Translating software with i18next is easy:
+
+- we replace hard-coded text, for instance `Hello`, by a function call with a key, `t("hello")`,
+- we create translation files containing the text for the key in different languages:
+
+```json title="en.json"
+{
+	"hello": "Hello"
+}
+```
+
+```json title="fr.json"
+{
+	"hello": "Bonjour"
+}
+```
+
+The problem is that there is **no easy way of detecting issues in translations**. For instance, if we change the key from `hello` to `hi`, then we have to update all the translation files manually.
+
+Many utilities have been made to improve the situation, often requirering extra build steps. Recently however, **it has became very nice and easy with i18next and TypeScript**.
+
+:::note
+This example uses a classic React single-page application, with no Server-Side Rendering or Static Site Generation. If you plan to use SSR or SSG — for instance with Next.js — you will have a more complex setup to create, in order to prevent hydration errors.
+:::
+
+## Make the main language the reference
+
+The types will be set by the translation file of our main language. For us, it will be English. It will become the source of truth.
+
+All other language files, as well as the code of the app, will be type checked against it.
+
+We start by creating the English translation file, as a TypeScript file:
+
+```ts title="en.ts"
+export const en = {
+	app: {
+		hello: "Hello",
+	},
+} as const;
+```
+
+Then, we want to create a type derived from this file, that we'll use with the other languages.
+
+To do this, we create a `DeepReplace` utility type. It creates an interface from an object, containing all the keys of this object, with all their types changed to `string`.
+
+```ts title="utils.ts"
+// https://stackoverflow.com/questions/60437172/typescript-deep-replace-multiple-types
+type Replacement<M extends [unknown, unknown], T> = M extends unknown
+	? [T] extends [M[0]]
+		? M[1]
+		: never
+	: never;
+export type DeepReplace<T, M extends [unknown, unknown]> = {
+	[P in keyof T]: T[P] extends M[0]
+		? Replacement<M, T[P]>
+		: T[P] extends object
+		? DeepReplace<T[P], M>
+		: T[P];
+};
+```
+
+To create our `I18nLocale` type, we use `DeepReplace` with the `en` object. The English translation file becomes:
+
+```ts title="en.ts"
+import { DeepReplace } from "~/lib/utils";
+
+export const en = {
+	app: {
+		hello: "Hello",
+	},
+} as const;
+
+export type I18nLocale = DeepReplace<typeof en, [string, string]>;
+```
+
+## Make the other languages follow the types of the main one
+
+We want to use our `I18nLocale` in all other translation files:
+
+```ts title="fr.ts"
+import { I18nLocale } from "./en";
+
+export const fr: I18nLocale = {
+	app: {
+		hello: "Bonjour",
+	},
+} as const;
+```
+
+Our translation files are now typed. A typo, or a missing key, is detected immediately:
+
+<Image src={screenshot2} alt="Typo in translation file" />
+
+We also now have intellisense available in the translation files:
+
+<Image src={screenshot4} alt="Intellisense in translation file" />
+
+## Use the types in the code
+
+In order to let i18next know about our types, we first create a `resources` constant containing all our languages, in the i18next initialisation file:
+
+```ts title="i18n.ts"
+import { en } from "./locales/en";
+import { fr } from "./locales/fr";
+
+export const resources = {
+	en,
+	fr,
+} as const;
+```
+
+We then create the file `src/@types/i18next.d.ts` – the path is important – containing:
+
+<!-- prettier-ignore-start -->
+```ts title="src/@types/i18next.d.ts"
+import { resources } from "@/i18n/i18n";
+
+declare module "i18next" {
+	interface CustomTypeOptions {
+		resources: (typeof resources)["en"];
+	}
+}
+```
+<!-- prettier-ignore-end -->
+
+And that's it! Now our types are checked in the code:
+
+<Image src={screenshot3} alt="Intellisense in translation file" />
+
+And we have Intellisense:
+
+<Image src={screenshot5} alt="Intellisense in translation file" />
+
+For more details on the implementation, check out the demo project at [github.com/zwyx/typesafe-translations](https://github.com/zwyx/typesafe-translations).
