@@ -9,6 +9,7 @@ tags: [git, commit, hash]
 
 import { Image } from "@site/src/components/Image";
 import gitHashMiner from "./git-hash-miner.jpg";
+import sublimeMerge from "./sublime-merge.png";
 
 <Image
 	src={gitHashMiner}
@@ -55,13 +56,11 @@ The committer's name is usually not shown by git clients, so it's not an issue t
 
 And even when it's shown, by Sublime Merge for instance, I believe it's not a big deal to have the committer's name followed by a bunch of hexadecimal digits:
 
-<div style={{ textAlign: "center" }}>
-
-![sublime-merge](./sublime-merge.png)
-
-</div>
-
-<ImageLegend>Hexadecimal number appended to the committer name</ImageLegend>
+<Image
+	src={sublimeMerge}
+	alt="Sublime Merge"
+	legend="Hexadecimal number appended to the committer name"
+/>
 
 ## Mine your commit hashes!
 
