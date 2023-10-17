@@ -2,7 +2,7 @@
 slug:
 title:
 description:
-image: # must be at least... big enough... to be displayed by social platforms, smallest that worked is 749x247
+image:
 authors: [alex]
 tags: []
 draft: true
