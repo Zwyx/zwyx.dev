@@ -103,11 +103,11 @@ const config = {
 			colorMode: {
 				respectPrefersColorScheme: true,
 			},
-			image: "img/Zwyx-236x236-android-chrome-192x192.png",
+			image: "img/Zwyx-236x236-android-chrome-192x192.webp",
 			navbar: {
 				logo: {
 					alt: "Zwyx logo",
-					src: "img/Zwyx-236x236-android-chrome-192x192.png",
+					src: "img/Zwyx-236x236-android-chrome-192x192.webp",
 					href: "/",
 				},
 				items: [
