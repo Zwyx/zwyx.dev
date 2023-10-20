@@ -28,9 +28,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "${{ env.nvmrc }}"
-          cache: yarn
+          cache: npm
 
-      - run: yarn install --frozen-lockfile
+      - run: npm ci
 
       - env:
           DOMAIN: ${{ secrets.DOMAIN }}
@@ -42,7 +42,7 @@ jobs:
           GISCUS_REPO_ID: ${{ secrets.GISCUS_REPO_ID }}
           GISCUS_CATEGORY: ${{ secrets.GISCUS_CATEGORY }}
           GISCUS_CATEGORY_ID: ${{ secrets.GISCUS_CATEGORY_ID }}
-        run: yarn build
+        run: npm run build
 
       - run: |
           git switch --orphan dist

@@ -68,7 +68,7 @@ Server-side redirects are best, but as I'm hosting the site on GitHub Pages, thi
 Docusaurus provides a [plugin for client-side redirects](https://docusaurus.io/docs/next/api/plugins/@docusaurus/plugin-client-redirects):
 
 ```bash
-yarn add @docusaurus/plugin-client-redirects
+npm i @docusaurus/plugin-client-redirects
 ```
 
 ```js title="Extract from 'docusaurus.config.js'"
@@ -142,7 +142,7 @@ presets: [
 Install its React component:
 
 ```bash
-yarn add @giscus/react
+npm i @giscus/react
 ```
 
 Use [giscus.app](https://giscus.app) to set up and retrieve your configuration for Giscus, then create the file `src/components/GiscusComments.tsx`:
@@ -201,7 +201,7 @@ I used Docusaurus' [custom fields](https://docusaurus.io/docs/next/api/docusauru
 In order to add the Giscus component to our blog posts, we are going to use Docusaurus' swizzling method to wrap one component of the template (read about swizzling [here](https://docusaurus.io/docs/next/swizzling)):
 
 ```bash
-yarn run swizzle @docusaurus/theme-classic BlogPostItem --wrap
+npm run swizzle @docusaurus/theme-classic BlogPostItem --wrap
 ```
 
 This command creates a new file:
