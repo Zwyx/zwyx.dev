@@ -29,14 +29,16 @@ export const Image: FC<ImageProps> = ({
 	return (
 		<div className={clsx(style.imageWrapper, legend && style.withLegend)}>
 			<div
+				style={{ borderRadius }}
 				className={clsx(style.frame, withFrame && style.visible)}
-				style={{ width, height, borderRadius }}
 			>
 				<img
+					style={{ borderRadius }}
 					className={style.image}
 					src={src}
 					alt={alt}
-					style={{ borderRadius }}
+					width={width}
+					height={height}
 				/>
 			</div>
 
