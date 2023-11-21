@@ -4,16 +4,16 @@
 name: Build website
 
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
   workflow_dispatch:
 
 permissions:
   contents: write
 
 concurrency:
-  group: "build-website"
+  group: build-website
   cancel-in-progress: true
 
 jobs:
