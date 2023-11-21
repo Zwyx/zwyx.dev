@@ -1,0 +1,40 @@
+name: Take screenshots
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: take-screenshots
+  cancel-in-progress: true
+
+jobs:
+  take-screenshots:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Retrieve Node version
+        run: echo "nvmrc=$(cat .nvmrc)" >> $GITHUB_ENV
+        id: nvmrc
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "${{ env.nvmrc }}"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npm run playwright install --with-deps chromium
+
+      - name: Build the website
+        run: npm run docusaurus build
+
+      - name: Take screenshots with Playwright
+        run: npm run playwright test
+
+      - name: Upload screenshots to Argos
+        run: npm run argos upload ./screenshots

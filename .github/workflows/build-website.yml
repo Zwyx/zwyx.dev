@@ -13,7 +13,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: "build-website"
+  group: build-website
   cancel-in-progress: true
 
 jobs:
