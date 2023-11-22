@@ -70,6 +70,14 @@ const config: Config = {
 		locales: ["en"],
 	},
 
+	markdown: {
+		mdx1Compat: {
+			admonitions: false,
+			comments: false,
+			headingIds: false,
+		},
+	},
+
 	presets: [
 		[
 			"classic",
@@ -145,6 +153,7 @@ const config: Config = {
 		prism: {
 			theme,
 			darkTheme,
+			additionalLanguages: ["bash", "json"],
 		},
 	} satisfies ThemeConfig,
 
@@ -175,4 +184,4 @@ const config: Config = {
 	customFields,
 };
 
-module.exports = config;
+export default config;

@@ -1,7 +1,6 @@
 import { useColorMode } from "@docusaurus/theme-common";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Giscus from "@giscus/react";
-import React from "react";
 
 export default function GiscusComments() {
 	const {

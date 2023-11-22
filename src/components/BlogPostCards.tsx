@@ -1,6 +1,6 @@
 import Link from "@docusaurus/Link";
 import clsx from "clsx";
-import React, { FC } from "react";
+import { FC } from "react";
 import style from "./BlogPostCards.module.css";
 
 interface BlogPostCardsProps {

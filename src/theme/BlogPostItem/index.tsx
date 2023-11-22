@@ -1,7 +1,6 @@
 import useIsBrowser from "@docusaurus/useIsBrowser";
 import GiscusComments from "@site/src/components/GiscusComments";
 import BlogPostItem from "@theme-original/BlogPostItem";
-import React from "react";
 
 const POST_REGEX = /^\/(blog|til)\/.+$/;
 
