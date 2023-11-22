@@ -18,7 +18,7 @@ import screenshot5 from "./5.jpg";
 
 Use TypeScript to ensure the validity of your i18next translations.
 
-<!--truncate-->
+{/* truncate */}
 
 ---
 
@@ -82,8 +82,8 @@ export type DeepReplace<T, M extends [unknown, unknown]> = {
 	[P in keyof T]: T[P] extends M[0]
 		? Replacement<M, T[P]>
 		: T[P] extends object
-		? DeepReplace<T[P], M>
-		: T[P];
+		  ? DeepReplace<T[P], M>
+		  : T[P];
 };
 ```
 
@@ -139,7 +139,6 @@ export const resources = {
 
 We then create the file `src/@types/i18next.d.ts` – the path is important – containing:
 
-<!-- prettier-ignore-start -->
 ```ts title="src/@types/i18next.d.ts"
 import { resources } from "@/i18n/i18n";
 
@@ -149,7 +148,6 @@ declare module "i18next" {
 	}
 }
 ```
-<!-- prettier-ignore-end -->
 
 And that's it! Now our types are checked in the code:
 
