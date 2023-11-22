@@ -73,3 +73,7 @@ html[data-theme="dark"] .header-github-link:before {
 .container:has(.zwyx-main-page) {
 	max-width: 1920px;
 }
+
+code {
+	tab-size: 4;
+}
