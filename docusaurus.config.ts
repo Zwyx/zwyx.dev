@@ -1,10 +1,11 @@
-// @ts-check
+import type { Options, ThemeConfig } from "@docusaurus/preset-classic";
+import type { Config } from "@docusaurus/types";
+import dotenv from "dotenv";
+import { themes } from "prism-react-renderer";
+import { env, exit } from "process";
 
-const { env, exit } = require("process");
+dotenv.config();
 
-require("dotenv").config();
-
-const { themes } = require("prism-react-renderer");
 const theme = themes.github;
 const darkTheme = themes.dracula;
 
@@ -47,8 +48,7 @@ const customFields = Object.fromEntries(
 	}),
 );
 
-/** @type {import('@docusaurus/types').Config} */
-const config = {
+const config: Config = {
 	title: "Zwyx",
 	tagline: "Web dev",
 	favicon: "img/Zwyx-220x220-rounded-favicon.ico",
@@ -73,8 +73,7 @@ const config = {
 	presets: [
 		[
 			"classic",
-			/** @type {import('@docusaurus/preset-classic').Options} */
-			({
+			{
 				docs: false,
 				blog: {
 					blogTitle: "Zwyx's blog",
@@ -93,63 +92,61 @@ const config = {
 				theme: {
 					customCss: require.resolve("./src/css/custom.css"),
 				},
-			}),
+			} satisfies Options,
 		],
 	],
 
-	themeConfig:
-		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-		({
-			metadata: [{ name: "keywords", content: "software development, web" }],
-			colorMode: {
-				respectPrefersColorScheme: true,
+	themeConfig: {
+		metadata: [{ name: "keywords", content: "software development, web" }],
+		colorMode: {
+			respectPrefersColorScheme: true,
+		},
+		image: "img/Zwyx-236x236-android-chrome-192x192.webp",
+		navbar: {
+			logo: {
+				alt: "Zwyx logo",
+				src: "img/Zwyx-236x236-android-chrome-192x192.webp",
+				href: "/",
 			},
-			image: "img/Zwyx-236x236-android-chrome-192x192.webp",
-			navbar: {
-				logo: {
-					alt: "Zwyx logo",
-					src: "img/Zwyx-236x236-android-chrome-192x192.webp",
-					href: "/",
+			items: [
+				{
+					to: "blog",
+					label: "Blog",
 				},
-				items: [
-					{
-						to: "blog",
-						label: "Blog",
-					},
-					{
-						to: "til",
-						label: "Today I Learnt",
-					},
-					{
-						type: "search",
-						position: "right",
-					},
-					{
-						href: "https://github.com/Zwyx",
-						className: "header-github-link",
-						"aria-label": "GitHub",
-						position: "right",
-					},
-				],
-			},
-			algolia: {
-				appId: ALGOLIA_APP_ID,
-				apiKey: ALGOLIA_API_KEY,
-				indexName: "zwyx",
-			},
-			footer: {
-				style: "dark",
-				copyright: `Copyright © ${new Date().getFullYear()} Zwyx.dev${
-					env.NODE_ENV !== "development"
-						? `<!-- <br /><br /> --><a style="display: none;" href="https://visitorbadge.io/status?path=zwyx.dev" target="_blank"><img src="https://api.visitorbadge.io/api/visitors?path=zwyx.dev&labelColor=%23555555&countColor=%236280a6&style=flat&labelStyle=none" /></a>`
-						: ""
-				}`,
-			},
-			prism: {
-				theme,
-				darkTheme,
-			},
-		}),
+				{
+					to: "til",
+					label: "Today I Learnt",
+				},
+				{
+					type: "search",
+					position: "right",
+				},
+				{
+					href: "https://github.com/Zwyx",
+					className: "header-github-link",
+					"aria-label": "GitHub",
+					position: "right",
+				},
+			],
+		},
+		algolia: {
+			appId: ALGOLIA_APP_ID,
+			apiKey: ALGOLIA_API_KEY,
+			indexName: "zwyx",
+		},
+		footer: {
+			style: "dark",
+			copyright: `Copyright © ${new Date().getFullYear()} Zwyx.dev${
+				env.NODE_ENV !== "development"
+					? `<!-- <br /><br /> --><a style="display: none;" href="https://visitorbadge.io/status?path=zwyx.dev" target="_blank"><img src="https://api.visitorbadge.io/api/visitors?path=zwyx.dev&labelColor=%23555555&countColor=%236280a6&style=flat&labelStyle=none" /></a>`
+					: ""
+			}`,
+		},
+		prism: {
+			theme,
+			darkTheme,
+		},
+	} satisfies ThemeConfig,
 
 	plugins: [
 		[
