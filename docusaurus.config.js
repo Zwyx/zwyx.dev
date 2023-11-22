@@ -4,8 +4,9 @@ const { env, exit } = require("process");
 
 require("dotenv").config();
 
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+const { themes } = require("prism-react-renderer");
+const theme = themes.github;
+const darkTheme = themes.dracula;
 
 const DOMAIN = env.DOMAIN;
 const EDIT_URL = env.EDIT_URL;
@@ -145,8 +146,8 @@ const config = {
 				}`,
 			},
 			prism: {
-				theme: lightCodeTheme,
-				darkTheme: darkCodeTheme,
+				theme,
+				darkTheme,
 			},
 		}),
 
