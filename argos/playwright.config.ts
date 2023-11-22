@@ -4,7 +4,7 @@ import { devices } from "@playwright/test";
 const config: PlaywrightTestConfig = {
 	webServer: {
 		port: 3000,
-		command: "npm run serve",
+		command: "cd .. && npm run serve",
 	},
 	projects: [
 		{
