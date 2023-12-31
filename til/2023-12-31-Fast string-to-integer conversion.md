@@ -27,15 +27,15 @@ const fromBase10 = (text: string): bigint => {
 };
 ```
 
-However, this is quite slow: it takes 15s on my machine to convert `1*10^500,000` (a string containing a `1` followed by `500,000` zeros). (I tried to compile it to WebAssembly with AssemblyScript, but the result was even slower.)
+However, this is quite slow: it takes 30s on my machine to convert a string containing 500,000 random digits. (I tried to compile it to WebAssembly with AssemblyScript, but it made it even slower.)
 
-Whereas it takes 50ms to do it with `BigInt`!
+Whereas it takes 100ms to do it with `BigInt`!
 
 Sure, `BigInt` is implemented in C++, but 300 times slower seems a bit of a stretch...
 
-Turns out, `BigInt` uses a different algorithm, which we can find in V8's [`FromStringLarge`](https://github.com/v8/v8/blob/main/src/bigint/fromstring.cc) function.
+Turns out, `BigInt` uses a different algorithm, which can be found in V8's [`FromStringLarge`](https://github.com/v8/v8/blob/main/src/bigint/fromstring.cc) function.
 
-I'll leave it to you to read the description, in V8's source code, to understand how it works, and here is my rough JavaScript version:
+I'll leave it to you to read the description in V8's source code to understand how it works, and here is my rough JavaScript version:
 
 ```ts
 const fromBase10 = (text: string): bigint => {
@@ -66,7 +66,9 @@ const fromBase10 = (text: string): bigint => {
 };
 ```
 
-It now takes 100ms to do the conversion! Only 2 times slower that the `BigInt`, and without any optimisations. Quite good!
+It now takes 120ms to do the conversion! Just slightly slower than `BigInt`, and without any optimisations!
+
+It's a bit counter intuitive, because this algorithm does about 1,000,000 iterations, instead of 500,000 for the classic algorithm (which does one for each digit). The reason is, I guess, that the multiplications are smaller, and possibly more optimisable because involving parts that are of the same size.
 
 Now, why do I want to reimplement `BigInt`, you may be wondering?
 
