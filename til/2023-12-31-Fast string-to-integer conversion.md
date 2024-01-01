@@ -10,18 +10,21 @@ const fromBase10 = (text: string): bigint => {
 
 	// start from the left of the string
 	for (let i = 0; i < text.length; i++) {
-		// for each digit, take the previous result, multiply it by the base, and add the new digit
+		// for each digit, take the previous result,
+		// multiply it by the base, and add the new digit
 		result = result * 10n + BigInt("0123456789".indexOf(text.charAt(i)));
 	}
 
-	// or we could do that, but it's slower:
-	// // starting from the right of the string
-	// for (let i = text.length - 1; i >= 0; i--) {
-	// 	// multiply each digit by the base to the power of the digit position, and add it to the result
-	// 	result +=
-	// 		BigInt("0123456789".indexOf(text.charAt(i))) *
-	// 		10n ** BigInt(text.length - 1 - i);
-	// }
+	/* or we could do that, but it's slower:
+	// starting from the right of the string
+	for (let i = text.length - 1; i >= 0; i--) {
+		// multiply each digit by the base to the power of
+		// the digit position, and add it to the result
+		result +=
+			BigInt("0123456789".indexOf(text.charAt(i))) *
+			10n ** BigInt(text.length - 1 - i);
+	}
+	*/
 
 	return result;
 };
@@ -41,11 +44,15 @@ I'll leave it to you to read the description in V8's source code to understand h
 const fromBase10 = (text: string): bigint => {
 	let parts = text.split("").map((part) => [BigInt(part), 10n]);
 
-	let indicator: boolean;
+	if (parts.length === 1) {
+		return parts[0][0];
+	}
+
+	let pairFull: boolean;
 	while (parts.length > 2) {
-		indicator = false;
+		pairFull = false;
 		parts = parts.reduce<bigint[][]>((acc, cur, i) => {
-			if (!indicator) {
+			if (!pairFull) {
 				if (i === parts.length - 1) {
 					acc.push(cur);
 				} else {
@@ -53,10 +60,10 @@ const fromBase10 = (text: string): bigint => {
 						cur[0] * parts[i + 1][1] + parts[i + 1][0],
 						cur[1] * parts[i + 1][1],
 					]);
-					indicator = true;
+					pairFull = true;
 				}
 			} else {
-				indicator = false;
+				pairFull = false;
 			}
 			return acc;
 		}, []);
