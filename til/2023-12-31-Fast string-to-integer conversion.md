@@ -5,14 +5,14 @@ tags: [javascript, v8, string, integer]
 To convert a string to an integer, the classic algorithm is:
 
 ```ts
-const fromBase10 = (text: string): bigint => {
+const fromBase = (text: string, base: bigint): bigint => {
 	let result = 0n;
 
 	// start from the left of the string
 	for (let i = 0; i < text.length; i++) {
 		// for each digit, take the previous result,
 		// multiply it by the base, and add the new digit
-		result = result * 10n + BigInt("0123456789".indexOf(text.charAt(i)));
+		result = result * base + BigInt("0123456789".indexOf(text.charAt(i)));
 	}
 
 	/* or we could do that, but it's slower:
@@ -22,7 +22,7 @@ const fromBase10 = (text: string): bigint => {
 		// the digit position, and add it to the result
 		result +=
 			BigInt("0123456789".indexOf(text.charAt(i))) *
-			10n ** BigInt(text.length - 1 - i);
+			base ** BigInt(text.length - 1 - i);
 	}
 	*/
 
@@ -30,7 +30,7 @@ const fromBase10 = (text: string): bigint => {
 };
 ```
 
-However, this is quite slow: it takes 30s on my machine to convert a string containing 500,000 random digits. (I tried to compile it to WebAssembly with AssemblyScript, but it made it even slower.)
+However, this is quite slow: it takes 30s on my machine to convert a string containing 500,000 random digits in base 10. (I tried to compile it to WebAssembly with AssemblyScript, but it made it even slower.)
 
 Whereas it takes 100ms to do it with `BigInt`!
 
@@ -41,8 +41,8 @@ Turns out, `BigInt` uses a different algorithm, which can be found in V8's [`Fro
 I'll leave it to you to read the description in V8's source code to understand how it works, and here is my rough JavaScript version:
 
 ```ts
-const fromBase10 = (text: string): bigint => {
-	let parts = text.split("").map((part) => [BigInt(part), 10n]);
+const fromBase = (text: string, base: bigint): bigint => {
+	let parts = text.split("").map((part) => [BigInt(part), base]);
 
 	if (parts.length === 1) {
 		return parts[0][0];
