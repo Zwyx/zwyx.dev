@@ -48,6 +48,8 @@ const customFields = Object.fromEntries(
 	}),
 );
 
+const prod = process.env.NODE_ENV === "production";
+
 const config: Config = {
 	title: "Zwyx",
 	tagline: "Web dev",
@@ -58,11 +60,15 @@ const config: Config = {
 	trailingSlash: false,
 
 	scripts: [
-		{
-			src: PLAUSIBLE_SCRIPT_SRC,
-			defer: true,
-			"data-domain": DOMAIN,
-		},
+		...(prod
+			? [
+					{
+						src: PLAUSIBLE_SCRIPT_SRC,
+						defer: true,
+						"data-domain": DOMAIN,
+					},
+			  ]
+			: []),
 	],
 
 	i18n: {
