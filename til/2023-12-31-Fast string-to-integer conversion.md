@@ -5,14 +5,18 @@ tags: [javascript, v8, string, integer]
 To convert a string to an integer, the classic algorithm is:
 
 ```ts
-const fromBase = (text: string, base: bigint): bigint => {
+const fromBase = (
+	text: string,
+	base: bigint = 10n,
+	alphabet: string = "0123456789",
+): bigint => {
 	let result = 0n;
 
 	// start from the left of the string
 	for (let i = 0; i < text.length; i++) {
 		// for each digit, take the previous result,
 		// multiply it by the base, and add the new digit
-		result = result * base + BigInt("0123456789".indexOf(text.charAt(i)));
+		result = result * base + BigInt(alphabet.indexOf(text.charAt(i)));
 	}
 
 	/* or we could do that, but it's slower:
@@ -21,7 +25,7 @@ const fromBase = (text: string, base: bigint): bigint => {
 		// multiply each digit by the base to the power of
 		// the digit position, and add it to the result
 		result +=
-			BigInt("0123456789".indexOf(text.charAt(i))) *
+			BigInt(alphabet.indexOf(text.charAt(i))) *
 			base ** BigInt(text.length - 1 - i);
 	}
 	*/
@@ -32,7 +36,7 @@ const fromBase = (text: string, base: bigint): bigint => {
 
 However, this is quite slow: it takes 30s on my machine to convert a string containing 500,000 random digits in base 10. (I tried to compile it to WebAssembly with AssemblyScript, but it made it even slower.)
 
-Whereas it takes 100ms to do it with `BigInt`!
+Whereas it takes Chrome's `BigInt` only 100ms!
 
 Sure, `BigInt` is implemented in C++, but 300 times slower seems a bit of a stretch...
 
@@ -41,8 +45,14 @@ Turns out, `BigInt` uses a different algorithm, which can be found in V8's [`Fro
 I'll leave it to you to read the description in V8's source code to understand how it works, and here is my rough JavaScript version:
 
 ```ts
-const fromBase = (text: string, base: bigint): bigint => {
-	let parts = text.split("").map((part) => [BigInt(part), base]);
+const fromBase = (
+	text: string,
+	base: bigint = 10n,
+	alphabet: string = "0123456789",
+): bigint => {
+	let parts = text
+		.split("")
+		.map((part) => [BigInt(alphabet.indexOf(part)), base]);
 
 	if (parts.length === 1) {
 		return parts[0][0];
