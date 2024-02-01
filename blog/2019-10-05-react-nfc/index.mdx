@@ -10,6 +10,10 @@ tags: [nfc, typescript, react, capacitor, cordova]
 import { Image } from "@site/src/components/Image";
 import reactNfc from "./react-nfc.webp";
 
+:::danger[Warning: this article is old!]
+This article has been written in 2019. I stopped working with NFC on mobile a few years later.
+:::
+
 <Image src={reactNfc} alt="React NFC" />
 
 [Ionic Capacitor](https://capacitor.ionicframework.com/) and [Apache Cordova](https://cordova.apache.org/) are two common wrappers to create a hybrid mobile application from a web application. The main advantage over a native mobile app is the re-usability of the code — and the development languages being HTML, CSS, and JavaScript, if we like them.
@@ -238,12 +242,16 @@ We can now start Android Studio, open the newly created `android` folder as a pr
 
 import nfcUnavailable from "./nfc-unavailable.webp";
 
+<div style={{ textAlign: "center" }}>
+
 <Image
 	src={nfcUnavailable}
 	alt="NFC unavailable"
 	width="80%"
 	legend="Our web app on an Android device with NFC not enabled"
 />
+
+</div>
 
 From now on, if we make changes to our web app, we just need to run the following two commands to rebuild the app and update the Capacitor project:
 
