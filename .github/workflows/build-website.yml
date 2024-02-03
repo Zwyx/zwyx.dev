@@ -33,6 +33,10 @@ jobs:
       - run: npm ci
 
       - env:
+          DOMAIN: "${{ secrets.DOMAIN }}"
+        run: sed -i "s/\$DOMAIN/${{ env.DOMAIN }}/g" src/pages/index.mdx
+
+      - env:
           DOMAIN: ${{ secrets.DOMAIN }}
           EDIT_URL: ${{ secrets.EDIT_URL }}
           ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
@@ -45,6 +49,7 @@ jobs:
         run: npm run build
 
       - run: |
+          git checkout src/pages/index.mdx
           git switch --orphan dist
           mv build docs
           git add docs
