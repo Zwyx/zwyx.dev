@@ -1,0 +1,191 @@
+---
+slug: base-conversions-with-big-numbers-in-javascript
+title: Base conversions with big numbers in JavaScript
+description: How to rapidly convert big numbers from one base to another in JavaScript
+# image:
+authors: [alex]
+tags: [base conversion, v8, integer, bigint, string, algorithm, javasrcipt]
+---
+
+For [the Library of Babel](https://babel.zwyx.dev), I needed to convert very big numbers — hundreds of thousands of digits — from a base to another.
+
+{/* truncate */}
+
+However, `BigInt` is limited:
+
+- from string → the constructor `BigInt()` accepts strings in bases 2, 8, 10, and 16, only;
+- to string → `toString()` accepts a base of between 2 and 36.
+
+I needed to work with bases 29 and 94, `BigInt` wasn't able to handle this. So I tried to implement the necessary algorithms in JavaScript.
+
+## From string
+
+To convert a **string to an integer**, the classic algorithm is:
+
+```ts
+const fromBase = (
+	text: string,
+	base: bigint = 10n,
+	alphabet: string = "0123456789",
+): bigint => {
+	let result = 0n;
+
+	// Start from the left of the string
+	for (let i = 0; i < text.length; i++) {
+		// for each digit, take the previous result,
+		// multiply it by the base, and add the new digit
+		result = result * base + BigInt(alphabet.indexOf(text.charAt(i)));
+	}
+
+	/* or we could do that, but it's slower:
+	// starting from the right of the string
+	for (let i = text.length - 1; i >= 0; i--) {
+		// multiply each digit by the base to the power of
+		// the digit position, and add it to the result
+		result +=
+			BigInt(alphabet.indexOf(text.charAt(i))) *
+			base ** BigInt(text.length - 1 - i);
+	}
+	*/
+
+	return result;
+};
+```
+
+However, this is quite slow: it takes **30s** on my machine to convert a string containing **500,000 random digits in base 10**. (I tried to compile it to WebAssembly with AssemblyScript, but it made it even slower.)
+
+Whereas it takes Chrome's `BigInt` only **100ms**!
+
+Turns out, `BigInt` uses a different algorithm, which can be found in V8's [`FromStringLarge`](https://github.com/v8/v8/blob/main/src/bigint/fromstring.cc) function.
+
+I'll leave it to you to read the description in V8's source code to understand how it works, and here is my JavaScript version:
+
+```ts
+const fromBase = (
+	text: string,
+	base: bigint = 10n,
+	alphabet: string = "0123456789",
+): bigint => {
+	let parts = text
+		.split("")
+		.map((part) => [BigInt(alphabet.indexOf(part)), base]);
+
+	if (parts.length === 1) {
+		return parts[0][0];
+	}
+
+	let pairFull: boolean;
+	while (parts.length > 2) {
+		pairFull = false;
+		parts = parts.reduce<bigint[][]>((acc, cur, i) => {
+			if (!pairFull) {
+				if (i === parts.length - 1) {
+					acc.push(cur);
+				} else {
+					acc.push([
+						cur[0] * parts[i + 1][1] + parts[i + 1][0],
+						cur[1] * parts[i + 1][1],
+					]);
+					pairFull = true;
+				}
+			} else {
+				pairFull = false;
+			}
+			return acc;
+		}, []);
+	}
+
+	return parts[0][0] * parts[1][1] + parts[1][0];
+};
+```
+
+It now takes **120ms** to do the conversion! Just slightly slower than native `BigInt`. (And without any optimisations that are mentioned in V8's code.)
+
+It's a bit counter intuitive, because this algorithm does about 1,000,000 iterations, instead of 500,000 for the classic algorithm (which does one for each digit). The reason is apparently that the multiplications are smaller, and possibly more optimisable because involving parts of the same size.
+
+## To string
+
+To convert an **integer to a string**, the classic algorithm is the successive division method:
+
+```ts
+const toBase = (
+	value: bigint,
+	base: bigint = 10n,
+	alphabet: string = "0123456789",
+): string => {
+	let result = "";
+
+	// At start, the dividend is equal to the value
+	let dividend = value;
+	let remainder;
+
+	while (dividend >= base) {
+		// We get the remainder of the dividend modulo the base
+		remainder = dividend % base;
+		// and we append it to the result, from right to left
+		result = alphabet[Number(remainder)] + result;
+		// then we divide the dividend by the base
+		// and that gives us the dividend for the next iteration
+		dividend = dividend / base;
+	}
+	result = alphabet[Number(dividend)] + result;
+
+	return result;
+};
+```
+
+However, this is again quite slow: 30s to convert a bigint of 500,000 random digits in base 10.
+
+For this too, Chrome's `BigInt` is much faster, and uses a different algorithm, [« divide-and-conquer conversion »](https://github.com/v8/v8/blob/main/src/bigint/tostring.cc).
+
+I recommend again to read the description in V8's code, as I couldn't explain it better, and here is my JavaScript version:
+
+```ts
+const toBase = (
+	value: bigint,
+	base: bigint = 10n,
+	alphabet: string = "0123456789",
+): string => {
+	let result = "";
+
+	const divisors = [base];
+
+	const numberOfBitsInValue = value.toString(2).length;
+
+	while (divisors.at(-1).toString(2).length * 2 - 1 <= numberOfBitsInValue) {
+		divisors.push(divisors.at(-1) ** 2n);
+	}
+
+	const devide = (dividend: bigint, divisorIndex: number) => {
+		const divisor = divisors[divisorIndex];
+
+		const remainder = dividend % divisor;
+		const newDividend = dividend / divisor;
+
+		if (divisorIndex > 0) {
+			devide(remainder, divisorIndex - 1);
+			devide(newDividend, divisorIndex - 1);
+		} else {
+			result = `${alphabet[Number(newDividend)]}${
+				alphabet[Number(remainder)]
+			}${result}`;
+		}
+	};
+
+	devide(value, divisors.length - 1, true);
+
+	result = result.replace(new RegExp(`^${alphabet[0]}*`), "");
+
+	return result;
+};
+```
+
+It now takes **150ms** to do the conversion! (Also without any optimisations.)
+
+---
+
+And that's it. These two fast algorithms made possible my version of the [the Library of Babel](https://babel.zwyx.dev), which works entirely client-side.
+
+## Future
+
+There is [a TC39 proposal](https://github.com/tc39/proposal-number-fromstring) to give `BigInt` more capabilities, but as of 2023, it doesn't look like it's getting much traction.

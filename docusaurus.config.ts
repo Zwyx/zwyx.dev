@@ -150,11 +150,7 @@ const config: Config = {
 		},
 		footer: {
 			style: "dark",
-			copyright: `Copyright © ${new Date().getFullYear()} Zwyx.dev${
-				env.NODE_ENV !== "development"
-					? `<!-- <br /><br /> --><a style="display: none;" href="https://visitorbadge.io/status?path=zwyx.dev" target="_blank"><img src="https://api.visitorbadge.io/api/visitors?path=zwyx.dev&labelColor=%23555555&countColor=%236280a6&style=flat&labelStyle=none" /></a>`
-					: ""
-			}`,
+			copyright: `Copyright © ${new Date().getFullYear()} Zwyx.dev`,
 		},
 		prism: {
 			theme,
