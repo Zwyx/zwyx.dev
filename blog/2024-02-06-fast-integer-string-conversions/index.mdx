@@ -54,7 +54,7 @@ const fromBase = (
 
 However, this is quite slow: it takes **30s** on my machine to convert a string containing **500,000 random digits in base 10**. (I tried to compile it to WebAssembly with AssemblyScript, but it made it even slower.)
 
-Whereas it takes Chrome's `BigInt` only **100ms**!
+Whereas it takes V8's `BigInt` only **100ms**!
 
 Turns out, `BigInt` uses a different algorithm, which can be found in V8's [`FromStringLarge`](https://github.com/v8/v8/blob/main/src/bigint/fromstring.cc) function.
 
@@ -136,7 +136,7 @@ const toBase = (
 
 However, this is again quite slow: 30s to convert a bigint of 500,000 random digits in base 10.
 
-For this too, Chrome's `BigInt` is much faster, and uses a different algorithm, [« divide-and-conquer conversion »](https://github.com/v8/v8/blob/main/src/bigint/tostring.cc).
+For this too, V8's `BigInt` is much faster, and uses a different algorithm, [« divide-and-conquer conversion »](https://github.com/v8/v8/blob/main/src/bigint/tostring.cc).
 
 I recommend again to read the description in V8's code, as I couldn't explain it better, and here is my JavaScript version:
 
@@ -185,6 +185,24 @@ It now takes **150ms** to do the conversion! (Also without any optimisations.)
 ---
 
 And that's it. These two fast algorithms made possible my version of the [the Library of Babel](https://babel.zwyx.dev), which works entirely client-side.
+
+## Unexpected turn of events!
+
+Thanks to these algorithms, I was able to finish the [the Library of Babel](https://babel.zwyx.dev). Every operation was taking a couple of seconds, at most, on my computer.
+
+However, when testing the app on my phone, I realised that one operation was very slow: it took more than 3 minutes!
+
+It turned out that it was a `.toString()` call on a very large bigint. The need was to convert this bigint to a string in base 10, so I didn't bother changing this `.toString()` to use the new algorithm `toBase`, because `.toString()` is able to handle base 10.
+
+However, V8's [source code](https://github.com/v8/v8/blob/main/src/bigint/tostring.cc) shows that the fast `.toString` algorithm is behind the flag `V8_ADVANCED_BIGINT_ALGORITHMS`.
+
+I guess this flag is ON when Chrome is built for Linux desktop, but OFF when it's built for Android.
+
+I simply replaced `.toString()` by a call to `toBase(...)` and the app became fast on my phone too!
+
+:::note
+There is also a call to `.toString(16)` on the same number, but this one is very quick. The algorithm for base 16 must be much faster because it just has to split every byte into two hexadecimal values. So I didn't have to change this one.
+:::
 
 ## Future
 
