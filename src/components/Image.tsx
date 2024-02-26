@@ -5,7 +5,8 @@ import { Legend } from "./Legend";
 
 interface ImageProps extends PropsWithChildren {
 	src: string;
-	alt: string;
+	/** The value of `legend` will be used for `alt` if `alt` isn't provided */
+	alt?: string;
 	width?: string;
 	/** Providing both `width` and `height` isn't necessary, but doing so prevents layout shift */
 	height?: string;
@@ -36,7 +37,7 @@ export const Image: FC<ImageProps> = ({
 					style={{ borderRadius }}
 					className={style.image}
 					src={src}
-					alt={alt}
+					alt={alt || (typeof legend === "string" ? legend : "")}
 					width={width}
 					height={height}
 				/>
