@@ -71,7 +71,7 @@ html[data-theme="dark"] .header-github-link:before {
 }
 
 .container:has(.zwyx-main-page) {
-	max-width: 1920px;
+	max-width: 1500px; /* allows three blog post cards per row */
 }
 
 code {
