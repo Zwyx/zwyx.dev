@@ -1,0 +1,63 @@
+---
+tags: [viewport]
+---
+
+The `viewport` meta tag option `interactive-widget` allows us to choose what the browser should do with our page when some overlay elements — such as a phone on-screen keyboard — appear:
+
+import { Image } from "@site/src/components/Image";
+import libraryOfBabel from "./2024-03-27-interactive-widget-babel.webp";
+import interactiveWidgetOptionComparison from "./2024-03-27-interactive-widget-visual-comparison-all.webp";
+
+<Image
+	src={interactiveWidgetOptionComparison}
+	alt="interactive-widget options comparison"
+	legend={
+		<>
+			<code>interactive-widget</code> options comparison. The difference between{" "}
+			<code>resizes-visual</code> and <code>overlays-content</code> is that{" "}
+			<code>resizes-visual</code> allows the user to scroll the page up to see
+			the sticky element at the bottom, whereas <code>overlays-content</code>{" "}
+			doesn't.
+		</>
+	}
+/>
+
+Chrome's default behaviour on Android, before version 108, was `resizes-content` — it is now `resizes-visual`.
+
+For example, the [Library of Babel](https://babel.zwyx.dev/) `viewport` meta tag is now:
+
+```html
+<meta
+	name="viewport"
+	content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content"
+/>
+```
+
+This allows the sticky pagination component to be always visible when the on-screen keyboard is open:
+
+<div style={{ textAlign: "center" }}>
+
+<Image
+	src={libraryOfBabel}
+	alt="Example on the Library of Babel"
+	width={350}
+	legend={
+		<>
+			The keyboard is{" "}
+			<a
+				href="https://github.com/dessalines/thumb-key"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				Thumb-Key
+			</a>
+			.
+		</>
+	}
+/>
+
+</div>
+
+Without `interactive-widget`, scrolling down while the keyboard was open made the sticky pagination component to disappear.
+
+Read more at [developer.chrome.com/blog/viewport-resize-behavior](https://developer.chrome.com/blog/viewport-resize-behavior) (which is the source of the comparison image above).
