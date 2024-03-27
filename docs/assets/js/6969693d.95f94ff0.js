@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[2289],{3687:e=>{e.exports=JSON.parse('{"label":"ftp","permalink":"/til/tags/ftp","allTagsPath":"/til/tags","count":1,"unlisted":false}')}}]);

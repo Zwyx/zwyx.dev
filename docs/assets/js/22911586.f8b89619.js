@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[1282],{9723:e=>{e.exports=JSON.parse('{"label":"chrome","permalink":"/til/tags/chrome","allTagsPath":"/til/tags","count":1,"unlisted":false}')}}]);

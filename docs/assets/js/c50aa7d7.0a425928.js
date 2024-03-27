@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[7257],{4178:e=>{e.exports=JSON.parse('{"label":"integer","permalink":"/til/tags/integer","allTagsPath":"/til/tags","count":2,"unlisted":false}')}}]);

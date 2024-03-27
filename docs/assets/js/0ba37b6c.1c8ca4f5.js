@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[2158],{8750:e=>{e.exports=JSON.parse('{"label":"dark theme","permalink":"/blog/tags/dark-theme","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

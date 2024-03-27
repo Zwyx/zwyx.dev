@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[1503],{203:e=>{e.exports=JSON.parse('{"label":"i18n","permalink":"/blog/tags/i-18-n","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

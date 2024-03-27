@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[727],{9027:e=>{e.exports=JSON.parse('{"label":"git","permalink":"/blog/tags/git","allTagsPath":"/blog/tags","count":4,"unlisted":false}')}}]);

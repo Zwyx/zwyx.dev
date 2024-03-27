@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[6700],{6874:e=>{e.exports=JSON.parse('{"permalink":"/blog/tags/react","page":1,"postsPerPage":3,"totalPages":1,"totalCount":3,"blogDescription":"Web dev and stuff","blogTitle":"Zwyx\'s blog"}')}}]);

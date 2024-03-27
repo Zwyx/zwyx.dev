@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[6965],{9285:e=>{e.exports=JSON.parse('{"label":"nfc","permalink":"/blog/tags/nfc","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

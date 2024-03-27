@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[9316],{6647:a=>{a.exports=JSON.parse('{"label":"javascript","permalink":"/til/tags/javascript","allTagsPath":"/til/tags","count":2,"unlisted":false}')}}]);

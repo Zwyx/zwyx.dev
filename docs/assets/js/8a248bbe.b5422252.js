@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[7367],{8813:e=>{e.exports=JSON.parse('{"label":"static site generator","permalink":"/blog/tags/static-site-generator","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

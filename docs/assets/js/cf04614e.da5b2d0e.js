@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[1238],{889:a=>{a.exports=JSON.parse('{"label":"tailwind","permalink":"/blog/tags/tailwind","allTagsPath":"/blog/tags","count":2,"unlisted":false}')}}]);

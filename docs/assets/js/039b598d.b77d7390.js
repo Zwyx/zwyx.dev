@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[4551],{4506:e=>{e.exports=JSON.parse('{"permalink":"/blog/tags/shadcnui","page":1,"postsPerPage":2,"totalPages":1,"totalCount":2,"blogDescription":"Web dev and stuff","blogTitle":"Zwyx\'s blog"}')}}]);

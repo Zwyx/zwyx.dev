@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[4548],{7533:e=>{e.exports=JSON.parse('{"label":"wget","permalink":"/til/tags/wget","allTagsPath":"/til/tags","count":1,"unlisted":false}')}}]);

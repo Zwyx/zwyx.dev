@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[1177],{3955:s=>{s.exports=JSON.parse('{"label":"shadcnui","permalink":"/blog/tags/shadcnui","allTagsPath":"/blog/tags","count":2,"unlisted":false}')}}]);

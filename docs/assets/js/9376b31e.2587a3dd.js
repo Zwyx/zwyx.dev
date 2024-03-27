@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[6547],{7092:s=>{s.exports=JSON.parse('{"label":"pass","permalink":"/blog/tags/pass","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

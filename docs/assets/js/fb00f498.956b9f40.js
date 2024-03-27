@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[8615],{3111:e=>{e.exports=JSON.parse('{"label":"formatter","permalink":"/blog/tags/formatter","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);
