@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[7666],{7090:e=>{e.exports=JSON.parse('{"label":"prettier","permalink":"/blog/tags/prettier","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

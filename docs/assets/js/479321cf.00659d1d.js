@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[2454],{9807:e=>{e.exports=JSON.parse('{"permalink":"/blog/tags/git","page":1,"postsPerPage":4,"totalPages":1,"totalCount":4,"blogDescription":"Web dev and stuff","blogTitle":"Zwyx\'s blog"}')}}]);

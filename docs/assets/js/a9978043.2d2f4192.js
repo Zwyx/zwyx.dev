@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[2480],{1198:e=>{e.exports=JSON.parse('{"permalink":"/til/tags/v-8","page":1,"postsPerPage":2,"totalPages":1,"totalCount":2,"blogDescription":"Today I Learnt, about web and dev","blogTitle":"Zwyx\'s Today I Learnt"}')}}]);

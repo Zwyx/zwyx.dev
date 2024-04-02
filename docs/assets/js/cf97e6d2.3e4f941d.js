@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[1432],{3045:a=>{a.exports=JSON.parse('{"label":"cordova","permalink":"/blog/tags/cordova","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

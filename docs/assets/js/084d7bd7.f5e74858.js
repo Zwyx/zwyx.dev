@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[4372],{9329:e=>{e.exports=JSON.parse('{"label":"bigint","permalink":"/blog/tags/bigint","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

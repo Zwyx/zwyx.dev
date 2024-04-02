@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[1307],{1892:e=>{e.exports=JSON.parse('{"label":"xclip","permalink":"/til/tags/xclip","allTagsPath":"/til/tags","count":1,"unlisted":false}')}}]);

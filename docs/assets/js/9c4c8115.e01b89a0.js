@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[3120],{3241:e=>{e.exports=JSON.parse('{"permalink":"/blog/tags/one-time-password","page":1,"postsPerPage":1,"totalPages":1,"totalCount":1,"blogDescription":"Web dev and stuff","blogTitle":"Zwyx\'s blog"}')}}]);

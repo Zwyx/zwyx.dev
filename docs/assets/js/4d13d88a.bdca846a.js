@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[9625],{4466:a=>{a.exports=JSON.parse('{"label":"javasrcipt","permalink":"/blog/tags/javasrcipt","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

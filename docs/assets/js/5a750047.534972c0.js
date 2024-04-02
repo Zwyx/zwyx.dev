@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[4123],{7455:a=>{a.exports=JSON.parse('{"label":"algorithm","permalink":"/blog/tags/algorithm","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

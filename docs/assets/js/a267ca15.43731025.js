@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[6210],{9273:e=>{e.exports=JSON.parse('{"label":"google authenticator","permalink":"/blog/tags/google-authenticator","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

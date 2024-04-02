@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[6480],{7730:s=>{s.exports=JSON.parse('{"label":"rsync","permalink":"/til/tags/rsync","allTagsPath":"/til/tags","count":1,"unlisted":false}')}}]);

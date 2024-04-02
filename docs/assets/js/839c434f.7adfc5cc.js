@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[1007],{5504:a=>{a.exports=JSON.parse('{"label":"command","permalink":"/til/tags/command","allTagsPath":"/til/tags","count":1,"unlisted":false}')}}]);

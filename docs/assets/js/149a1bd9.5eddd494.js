@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[4214],{5852:e=>{e.exports=JSON.parse('{"label":"totp","permalink":"/blog/tags/totp","allTagsPath":"/blog/tags","count":1,"unlisted":false}')}}]);

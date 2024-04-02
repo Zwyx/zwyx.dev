@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[5209],{8619:e=>{e.exports=JSON.parse('{"label":"inotify","permalink":"/til/tags/inotify","allTagsPath":"/til/tags","count":1,"unlisted":false}')}}]);

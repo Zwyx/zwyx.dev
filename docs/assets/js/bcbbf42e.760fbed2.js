@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[2606],{6090:e=>{e.exports=JSON.parse('{"label":"typescript","permalink":"/blog/tags/typescript","allTagsPath":"/blog/tags","count":3,"unlisted":false}')}}]);
