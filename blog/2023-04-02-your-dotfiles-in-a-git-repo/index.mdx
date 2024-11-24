@@ -32,7 +32,7 @@ So how to gather them in one Git repository? There are a few methods:
 
 ### 1. Create hard links or symlinks
 
-This method is a pain: creating all the links is cumbersome, and some software might delete and recreate their configuration files, breaking the links at the same without us noticing it.
+This method is a pain: creating all the links is cumbersome. Also, some software delete and recreate their configuration files instead of modifying them, which breaks the links without us noticing it.
 
 ### 2. Make your home directory the root of your Git config repository, and add only the files you want to track
 

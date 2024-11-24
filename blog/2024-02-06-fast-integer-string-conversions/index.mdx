@@ -4,7 +4,7 @@ title: Base conversions with big numbers in JavaScript
 description: How to rapidly convert big numbers from one base to another in JavaScript
 # image:
 authors: [alex]
-tags: [base conversion, v8, integer, bigint, string, algorithm, javasrcipt]
+tags: [base conversion, v8, integer, bigint, string, algorithm, javascript]
 ---
 
 For [the Library of Babel](https://babel.zwyx.dev), I needed to convert very big numbers — hundreds of thousands of digits — from a base to another.
@@ -156,15 +156,15 @@ const toBase = (
 		divisors.push(divisors.at(-1) ** 2n);
 	}
 
-	const devide = (dividend: bigint, divisorIndex: number) => {
+	const divide = (dividend: bigint, divisorIndex: number) => {
 		const divisor = divisors[divisorIndex];
 
 		const remainder = dividend % divisor;
 		const newDividend = dividend / divisor;
 
 		if (divisorIndex > 0) {
-			devide(remainder, divisorIndex - 1);
-			devide(newDividend, divisorIndex - 1);
+			divide(remainder, divisorIndex - 1);
+			divide(newDividend, divisorIndex - 1);
 		} else {
 			result = `${alphabet[Number(newDividend)]}${
 				alphabet[Number(remainder)]
@@ -172,7 +172,7 @@ const toBase = (
 		}
 	};
 
-	devide(value, divisors.length - 1, true);
+	divide(value, divisors.length - 1, true);
 
 	result = result.replace(new RegExp(`^${alphabet[0]}*`), "");
 

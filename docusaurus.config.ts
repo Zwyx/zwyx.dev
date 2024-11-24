@@ -98,6 +98,7 @@ const config: Config = {
 					editUrl: EDIT_URL,
 					feedOptions: {
 						type: "all",
+						xslt: true,
 						title: "Zwyx's blog",
 						description: "Web dev and stuff",
 						copyright: `Copyright © ${new Date().getFullYear()} Zwyx.`,
