@@ -174,6 +174,7 @@ const config: Config = {
 				postsPerPage: "ALL",
 				showReadingTime: false,
 				editUrl: EDIT_URL,
+				onUntruncatedBlogPosts: "ignore",
 				feedOptions: {
 					type: "all",
 					title: "Zwyx's TILs",
