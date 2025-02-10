@@ -7,7 +7,7 @@ authors: [alex]
 tags: [base conversion, v8, integer, bigint, string, algorithm, javascript]
 ---
 
-For [the Library of Babel](https://babel.zwyx.dev), I needed to convert very big numbers — hundreds of thousands of digits — from a base to another.
+For the [Library of Babel](https://babel.zwyx.dev), I needed to convert very big numbers — hundreds of thousands of digits — from a base to another.
 
 {/* truncate */}
 
@@ -23,11 +23,9 @@ I needed to work with bases 29 and 94, `BigInt` wasn't able to handle this. So I
 To convert a **string to an integer**, the classic algorithm is:
 
 ```ts
-const fromBase = (
-	text: string,
-	base: bigint = 10n,
-	alphabet: string = "0123456789",
-): bigint => {
+const fromBase = (text: string, alphabet: string = "0123456789"): bigint => {
+	const base = BigInt(alphabet.length);
+
 	let result = 0n;
 
 	// Start from the left of the string
@@ -61,11 +59,9 @@ Turns out, `BigInt` uses a different algorithm, which can be found in V8's [`Fro
 I'll leave it to you to read the description in V8's source code to understand how it works, and here is my JavaScript version:
 
 ```ts
-const fromBase = (
-	text: string,
-	base: bigint = 10n,
-	alphabet: string = "0123456789",
-): bigint => {
+const fromBase = (text: string, alphabet: string = "0123456789"): bigint => {
+	const base = BigInt(alphabet.length);
+
 	let parts = text
 		.split("")
 		.map((part) => [BigInt(alphabet.indexOf(part)), base]);
@@ -108,11 +104,9 @@ It's a bit counter intuitive, because this algorithm does about 1,000,000 iterat
 To convert an **integer to a string**, the classic algorithm is the successive division method:
 
 ```ts
-const toBase = (
-	value: bigint,
-	base: bigint = 10n,
-	alphabet: string = "0123456789",
-): string => {
+const toBase = (value: bigint, alphabet: string = "0123456789"): string => {
+	const base = BigInt(alphabet.length);
+
 	let result = "";
 
 	// At start, the dividend is equal to the value
@@ -141,11 +135,9 @@ For this too, V8's `BigInt` is much faster, and uses a different algorithm, [«�
 I recommend again to read the description in V8's code, as I couldn't explain it better, and here is my JavaScript version:
 
 ```ts
-const toBase = (
-	value: bigint,
-	base: bigint = 10n,
-	alphabet: string = "0123456789",
-): string => {
+const toBase = (value: bigint, alphabet: string = "0123456789"): string => {
+	const base = BigInt(alphabet.length);
+
 	let result = "";
 
 	const divisors = [base];
