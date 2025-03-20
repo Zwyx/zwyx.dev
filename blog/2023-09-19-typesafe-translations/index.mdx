@@ -8,11 +8,11 @@ tags: [i18n, i18next, vite, typescript, react, tailwind, shadcnui]
 ---
 
 import { Image } from "@site/src/components/Image";
-import translations from "./typesafe-translations.jpg";
 import screenshot2 from "./2.jpg";
 import screenshot3 from "./3.jpg";
 import screenshot4 from "./4.jpg";
 import screenshot5 from "./5.jpg";
+import translations from "./typesafe-translations.jpg";
 
 <Image src={translations} alt="Translations" />
 
@@ -64,7 +64,7 @@ export const en = {
 	app: {
 		hello: "Hello",
 	},
-} as const;
+};
 ```
 
 Then, we want to create a type derived from this file, that we'll use with the other languages.
@@ -96,7 +96,7 @@ export const en = {
 	app: {
 		hello: "Hello",
 	},
-} as const;
+};
 
 export type I18nLocale = DeepReplace<typeof en, [string, string]>;
 ```
@@ -112,7 +112,7 @@ export const fr: I18nLocale = {
 	app: {
 		hello: "Bonjour",
 	},
-} as const;
+};
 ```
 
 Our translation files are now typed. A typo, or a missing key, is detected immediately:
@@ -134,7 +134,7 @@ import { fr } from "./locales/fr";
 export const resources = {
 	en,
 	fr,
-} as const;
+};
 ```
 
 We then create the file `src/@types/i18next.d.ts` – the path is important – containing:
