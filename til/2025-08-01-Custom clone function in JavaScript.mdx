@@ -1,0 +1,90 @@
+---
+title: Custom clone function in JavaScript
+tags: [javascript, clone, bun, node]
+---
+
+We can easily clone an object in JavaScript using the [`structuredClone`](https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone) method, Ramda's [`clone`](https://ramdajs.com/docs/#clone), or Lodash's [`cloneDeep`](https://lodash.com/docs/4.17.15#cloneDeep).
+
+However, writing our own cloning function can lead to much better performances.
+
+For the Codewars kata [Win at Skyjo](https://www.codewars.com/kata/688b957a12698cb53d5959fe), the function [`getPlayersColumnsClone`](https://github.com/Zwyx/codewars-skyjo-resources/blob/df3cdcc47cf16b8904bd5f3fae015f25bc298cb0/src/utils.ts#L59) deep clones an array of five arrays, themselves arrays of four arrays, themselves arrays of three arrays of simple objects with four properties.
+
+Here's how this function performs 100,000 cloning operations compare to other methods:
+
+export const durationData = [
+	{ title: "getPlayersColumnsClone", duration: 0.06 },
+	{ title: "structuredClone", duration: 2.54 },
+	{ title: "Lodash.cloneDeep", duration: 4.68 },
+	{ title: "Ramda.clone", duration: 8.62 },
+];
+
+export const longestDuration = Math.max(
+	...durationData.map(({ duration }) => duration),
+);
+
+{durationData.map(({ title, duration }) => (
+
+<>
+	<code>{title}</code> {duration} s
+
+    <div style={{ marginTop: "2px", marginBottom: "12px", display: "flex", alignItems: "center" }}>
+    	<span
+    		style={{
+    			display: "inline-block",
+    			width: `${duration * 100 / longestDuration}%`,
+    			height: "8px",
+    			backgroundColor: "var(--ifm-link-color)",
+    				borderRadius: "5px"
+    		}}
+    	/>
+    </div>
+
+</>
+
+))}
+
+<details>
+<summary>Benchmark implementation</summary>
+
+```ts
+import Lodash from "lodash";
+import * as Ramda from "ramda";
+
+const NUMBER_OF_PLAYERS = 5;
+const NUMBER_OF_COLUMNS = 4;
+const NUMBER_OF_ROWS = 3;
+
+const playersColumns = Array.from({ length: NUMBER_OF_PLAYERS }, () =>
+	Array.from({ length: NUMBER_OF_COLUMNS }, (_, x) =>
+		Array.from({ length: NUMBER_OF_ROWS }, (__, y) => ({
+			x,
+			y,
+			card: 0,
+			visible: false,
+		})),
+	),
+);
+
+const cloneFunctions = [
+	Ramda.clone,
+	Lodash.cloneDeep,
+	structuredClone,
+	getPlayersColumnsClone,
+];
+
+for (const cloneFunction of cloneFunctions) {
+	console.info(`Cloning with '${cloneFunction.name}'...`);
+
+	const startTime = performance.now();
+
+	for (let i = 0; i < 100_000; i++) {
+		cloneFunction(playersColumns);
+	}
+
+	const duration = Math.round((performance.now() - startTime) / 10) / 100;
+
+	console.info(`Took ${duration} s`);
+}
+```
+
+</details>
