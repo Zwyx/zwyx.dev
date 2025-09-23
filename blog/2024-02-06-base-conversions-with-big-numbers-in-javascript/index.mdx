@@ -54,7 +54,7 @@ However, this is quite slow: it takes **30s** on my machine to convert a string 
 
 Whereas it takes V8's `BigInt` only **100ms**!
 
-Turns out, `BigInt` uses a different algorithm, which can be found in V8's [`FromStringLarge`](https://github.com/v8/v8/blob/main/src/bigint/fromstring.cc) function.
+Turns out, `BigInt` uses a different algorithm, which can be found in V8's [`FromStringLarge`](https://github.com/v8/v8/blob/19853e10095df4aa640d6d3377c532c8a22ae1c5/src/bigint/fromstring.cc#L50) function.
 
 I'll leave it to you to read the description in V8's source code to understand how it works, and here is my JavaScript version:
 
@@ -130,7 +130,7 @@ const toBase = (value: bigint, alphabet: string = "0123456789"): string => {
 
 However, this is again quite slow: 30s to convert a bigint of 500,000 random digits in base 10.
 
-For this too, V8's `BigInt` is much faster, and uses a different algorithm, [« divide-and-conquer conversion »](https://github.com/v8/v8/blob/main/src/bigint/tostring.cc).
+For this too, V8's `BigInt` is much faster, and uses a different algorithm, [_divide-and-conquer conversion_](https://github.com/v8/v8/blob/19853e10095df4aa640d6d3377c532c8a22ae1c5/src/bigint/tostring.cc#L275).
 
 I recommend again to read the description in V8's code, as I couldn't explain it better, and here is my JavaScript version:
 
