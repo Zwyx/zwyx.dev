@@ -51,6 +51,10 @@ const customFields = Object.fromEntries(
 const prod = process.env.NODE_ENV === "production";
 
 const config: Config = {
+	future: {
+		v4: true,
+	},
+
 	title: "Zwyx",
 	tagline: "Web dev",
 	favicon: "img/Zwyx-220x220-rounded-favicon.ico",
@@ -103,6 +107,9 @@ const config: Config = {
 						description: "Web dev and stuff",
 						copyright: `Copyright © ${new Date().getFullYear()} Zwyx.`,
 					},
+					onInlineTags: "warn",
+					onInlineAuthors: "warn",
+					onUntruncatedBlogPosts: "warn",
 				},
 				theme: {
 					customCss: require.resolve("./src/css/custom.css"),
