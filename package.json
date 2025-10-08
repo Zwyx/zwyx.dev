@@ -17,8 +17,8 @@
 		"prettier": "prettier -w ."
 	},
 	"dependencies": {
-		"@docusaurus/core": "^3.7.0",
-		"@docusaurus/preset-classic": "^3.7.0",
+		"@docusaurus/core": "^3.9.1",
+		"@docusaurus/preset-classic": "^3.9.1",
 		"@giscus/react": "^2.3.0",
 		"@mdx-js/react": "^3.0.0",
 		"clsx": "^1.2.1",
