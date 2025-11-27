@@ -2,6 +2,14 @@
 tags: [inotify, file system]
 ---
 
+:::info[EDIT (2025)]
+
+I now use [github.com/mikesart/inotify-info](https://github.com/mikesart/inotify-info) which is much faster.
+
+Below is the original post, with the old method:
+
+:::
+
 Check how many inotify watches are being used:
 
 ```bash
