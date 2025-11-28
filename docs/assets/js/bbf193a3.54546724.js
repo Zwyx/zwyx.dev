@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[4576],{1144:e=>{e.exports=JSON.parse('{"blogBasePath":"/til","blogTitle":"Zwyx\'s Today I Learnt","authorsListPath":"/til/authors"}')}}]);
