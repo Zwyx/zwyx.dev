@@ -163,7 +163,7 @@ const config: Config = {
 		prism: {
 			theme,
 			darkTheme,
-			additionalLanguages: ["bash", "json"],
+			additionalLanguages: ["bash", "docker", "json", "yaml"],
 		},
 	} satisfies ThemeConfig,
 
