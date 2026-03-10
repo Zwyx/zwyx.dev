@@ -64,6 +64,10 @@ const config: Config = {
 	trailingSlash: false,
 
 	scripts: [
+		{
+			src: "https://keepandroidopen.org/banner.js?size=mini",
+			defer: true,
+		},
 		...(prod
 			? [
 					{
@@ -71,7 +75,7 @@ const config: Config = {
 						defer: true,
 						"data-domain": DOMAIN,
 					},
-			  ]
+				]
 			: []),
 	],
 
