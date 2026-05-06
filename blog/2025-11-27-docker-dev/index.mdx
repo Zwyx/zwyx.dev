@@ -1,19 +1,24 @@
 ---
 slug: docker-dev
-title: Protect yourself from malicious NPM packages with a system-wide dev container
-description: Isolate Node.js development from your host system using a persistent Docker container.
-# image:
+title: Safer development with a system-wide dev container
+description: Use a persistent Docker container to protect you from malicious packages.
+image: ./dockerDev1Resized.webp
 authors: [alex]
 tags: [docker, security, npm, node, vscode]
 ---
 
 import { Image } from "@site/src/components/Image";
+import dockerDev from "./dockerDev1Resized.webp";
 import sublimeMerge from "./sublimeMerge.webp";
 import terminal from "./terminal.webp";
 import vscodeSettingsInContainer from "./vscodeSettingsInContainer.webp";
 import vscodeWindowCustomisation from "./vscodeWindowCustomisation.webp";
 
-Run a **single Docker container** that stays active, and drop into it whenever you need to work on a Node project. This "system-wide" container:
+<Image src={dockerDev} alt="Docker Dev" />
+
+Run a **single Docker container** that stays active, and drop into it whenever you need to work on a Node project.
+
+This "system-wide" container:
 
 - **starts once** and stays running: no startup time and less disk space, compared to regular per-project dev containers,
 - **is used to work on multiple projects**: attach as many VS Code windows as you want to it,
@@ -24,7 +29,7 @@ Run a **single Docker container** that stays active, and drop into it whenever y
 :::tip[Motivation]
 NPM supply chain attacks are increasingly common. Recently, the multiple [Shai-Hulud](https://www.koi.ai/incident/shai-hulud-npm-supply-chain-attack-crowdstrike-tinycolor) campaigns compromised many packages including some belonging to CrowdStrike, Zapier, PostHog, Postman, and [many others](https://www.wiz.io/blog/shai-hulud-2-0-ongoing-supply-chain-attack).
 
-Node.js hasn't been built with security in mind: any script, any dependency, has full access to the user's environment (file system, network, etc. which easily leads to credentials theft). Node's author himself recognised this and created [Deno and its system of permissions](https://deno.com/learn/nodes-security-problem) for this reason.
+Node.js wasn't built with security in mind: any script, any dependency, has full access to the user's environment (file system, network, etc. which easily leads to credentials theft). Node's author himself recognised this and created [Deno and its system of permissions](https://deno.com/learn/nodes-security-problem) for this reason.
 
 A way to make working with Node more secure is to use a [dev container](https://code.visualstudio.com/docs/devcontainers/containers): a Docker container inside which we run all our NPM commands and Node scripts. This isolates them from our host machine and drastically limits the damage in case of compromise.
 
@@ -36,7 +41,7 @@ However, with many projects, creating one dev container for each can quickly bec
 ## Setup
 
 :::info[Note]
-Working inside a dev container doesn't create any overhead on Linux, as Docker works natively there. If you use another system, your experience might be different.
+Working inside a dev container doesn't create any overhead on Linux, as Docker works natively there. If you use another system, your experience may vary.
 :::
 
 The full implementation is called Docker Dev and is available at [github.com/zwyx/docker-dev](https://github.com/zwyx/docker-dev).
@@ -75,7 +80,7 @@ docker-compose up -d
 ```
 
 :::info[Note]
-This container is quite tied to my personal configuration and preferences. If something doesn't work, open `Dockerfile` and `docker-compose.yml` to make any necessary adjustments.
+This container is quite tied to my personal configuration and preferences. If something doesn't work for you, open `Dockerfile` and `docker-compose.yml` to make any necessary adjustments.
 :::
 
 ## Terminal integration

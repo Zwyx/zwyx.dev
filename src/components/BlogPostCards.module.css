@@ -29,7 +29,9 @@
 	height: 150px;
 	border-radius: 3px;
 	object-fit: cover;
-	transition: opacity 0.2s, transform 0.2s;
+	transition:
+		opacity 0.2s,
+		transform 0.2s;
 }
 
 /* .blogPostCard:hover .image {
@@ -46,7 +48,9 @@
 
 .description {
 	display: inline-block; /* Necessary for `	text-decoration` to have an effect */
+	width: 100%;
 	padding: 0 8px 8px 8px;
+	text-align: center;
 	color: var(--ifm-font-color-base);
 	text-decoration: none;
 }
