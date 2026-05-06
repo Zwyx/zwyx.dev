@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkzwyx_dev=self.webpackChunkzwyx_dev||[]).push([[8947],{6600:e=>{e.exports=JSON.parse('{"authors":[{"name":"Alex","title":"Web developer","email":"alex@zwyx.dev","url":"https://github.com/Zwyx","imageURL":"https://github.com/zwyx.png","key":"alex","page":null,"count":14}]}')}}]);
