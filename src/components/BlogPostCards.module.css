@@ -2,7 +2,8 @@
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
-	gap: 48px;
+	/* gap: 48px; */
+	gap: 24px 48px;
 }
 
 .blogPostCard {
